@@ -1,0 +1,15 @@
+.DS_Store
+Thumbs.db
+
+# Secrets and local environment files
+.env
+.env.*
+!.env.example
+
+# Editor and OS
+.idea/
+*.iml
+
+# Logs and coverage at the repository root
+*.log
+coverage/
