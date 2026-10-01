@@ -18,7 +18,7 @@ Where the data is real: circular services, repair and refurbishment activity, pa
 
 ## Social
 
-Households taking part. Community taking part. Digital inclusion. Digital inclusion has no approved indicator.
+Device owners taking part. Community taking part. Digital inclusion. Digital inclusion has no approved indicator.
 
 ## Youth
 

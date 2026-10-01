@@ -2,13 +2,13 @@
 
 These apply to the Flutter app now. Backend style gets added when the language is chosen.
 
-Keep modules small. Follow the feature layout in [../architecture/mobile-app.md](../architecture/mobile-app.md). Official rules go in backend services, not in widgets and not in controllers. The phone may cache data and guide the user. The server decides. Spell lifecycle, collection, and household names in full.
+Keep modules small. Follow the feature layout in [../architecture/mobile-app.md](../architecture/mobile-app.md). Official rules go in backend services, not in widgets and not in controllers. The phone may cache data and guide the user. The server decides. Spell lifecycle, collection, and device owner names in full.
 
 In Dart, keep the types. Avoid `dynamic` unless a boundary really has no type. Use single quotes. The analyzer enforces that. Do not leave `print` in committed code. Use a logger when logging exists. `main.dart` only starts the app. Screens do not call the database or build HTTP requests. Data code does not build widgets. Add a package when a feature needs it, and say why in the change.
 
 Validate input where it arrives. A failed action must not be reported as a lifecycle change. Show the user a plain message. Keep the technical detail in logs, without secrets or IMEI values. An offline failure stays in the sync queue with its transaction id.
 
-Use the internal Device ID as the primary identifier. Treat IMEI and serial numbers as sensitive. Do not log personal data, tokens, or passwords. Do not hard-code environment URLs, keys, or pilot household data.
+Use the internal Device ID as the primary identifier. Treat IMEI and serial numbers as sensitive. Do not log personal data, tokens, or passwords. Do not hard-code environment URLs, keys, or pilot device owner data.
 
 Comment a constraint that is not obvious, such as why a transaction id has to be unique. Do not comment a line that only repeats the code.
 

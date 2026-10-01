@@ -2,16 +2,16 @@
 
 Use a relational database for the transactional core. The product is [TBD]. No tables exist. This note is the conceptual model from the definition, not a schema.
 
-A production diagram with real cardinalities is still design work. How many households a user belongs to, and how many users a household has, is not specified, so it is not drawn as a number.
+A production diagram with real cardinalities is still design work. How many device owners a user belongs to, and how many users a device owner has, is not specified, so it is not drawn as a number.
 
-The store has to represent users, roles, permissions, households, organizations, devices, device identifiers, collections, agents, assessments, repairs, refurbishment, parts recovery, recycling, partners, collection points, points transactions, notifications, audit events, sync events, and impact measures.
+The store has to represent users, roles, permissions, device owners, organizations, devices, device identifiers, collections, agents, assessments, repairs, refurbishment, parts recovery, recycling, partners, collection points, points transactions, notifications, audit events, sync events, and impact measures.
 
 Impact numbers should come from the operational records. Do not keep a second set of totals that can drift. A stored summary is fine later if it can be rebuilt. That design is [TBD].
 
 ```mermaid
 flowchart TD
   user[User]
-  household[Household]
+  deviceOwner[Device owner]
   organization[Organization]
   points[Points ledger]
   device[Device]
@@ -25,10 +25,10 @@ flowchart TD
   agent[Agent]
   partner[Partner]
 
-  user --> household
+  user --> deviceOwner
   user --> organization
   user --> points
-  household --> device
+  deviceOwner --> device
   organization --> device
   device --> collection
   device --> assessment
@@ -43,7 +43,7 @@ flowchart TD
   partner --> recycling
 ```
 
-The definition's sketch links a user to a household and devices, and a partner to pathway work. It does not draw organizations or collection points. Both are required elsewhere, so they stay in this picture. How a user belongs to a household or an organization is [TBD].
+The definition's sketch links a user to a device owner and devices, and a partner to pathway work. It does not draw organizations or collection points. Both are required elsewhere, so they stay in this picture. How a user belongs to a device owner or an organization is [TBD].
 
 Ownership transfer is open. The device stores an ownership reference. Do not assume collection changes who owns it.
 

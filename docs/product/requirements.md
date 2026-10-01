@@ -6,7 +6,7 @@ None of this is in the app yet.
 
 ## Objectives
 
-1. Households and organizations can register unwanted electronics.
+1. Device owners and organizations can register unwanted electronics.
 2. They can request a collection.
 3. Requests connect to Circularity Agents.
 4. Device details are stored.
@@ -28,7 +28,7 @@ Point rules for item 10 are [TBD]. The ledger requirement still stands.
 
 Phones, smartphones, feature phones, and small consumer electronics. Pilot focus is Freetown.
 
-Proposed scale, still to be checked: about 1,000 households, 10 to 20 agents, 5 to 10 repair or refurbishment partners, recycling partners, one platform.
+Proposed scale, still to be checked: about 1,000 device owners, 10 to 20 agents, 5 to 10 repair or refurbishment partners, recycling partners, one platform.
 
 Payments are [TBD]. They are not an implied feature. The rest of the deferred list is in [features.md](features.md).
 
@@ -38,7 +38,7 @@ Users sign in. Access is by role. A user only reaches what that role needs. Admi
 
 ## Devices
 
-A household user or an agent, if they are allowed, can register an eligible device. Registration returns a unique internal Device ID. That ID is the primary identifier.
+A device owner or an agent, if they are allowed, can register an eligible device. Registration returns a unique internal Device ID. That ID is the primary identifier.
 
 The record can also hold category, brand, model, serial number, and IMEI, when those exist.
 
@@ -62,7 +62,7 @@ Keep the history of meaningful transitions. The latest status is not a substitut
 
 ## Collection
 
-A household can request collection for one or more devices, give the collection details, give or pick a time window, and submit. The platform creates the request. An admin or a dispatch process assigns it to an eligible agent. An agent can see assigned collections and confirm collection.
+A device owner can request collection for one or more devices, give the collection details, give or pick a time window, and submit. The platform creates the request. An admin or a dispatch process assigns it to an eligible agent. An agent can see assigned collections and confirm collection.
 
 Collection statuses:
 
@@ -157,7 +157,7 @@ Security is in [../architecture/security.md](../architecture/security.md). Colle
 | Check | Passes when |
 | --- | --- |
 | Device registration | A user or an authorized agent registers an eligible device and gets a unique id |
-| Collection | A household requests collection and the system assigns an eligible agent |
+| Collection | A device owner requests collection and the system assigns an eligible agent |
 | Agent | An agent sees assigned collections and confirms collection |
 | Assessment | An authorized user records an assessment |
 | Lifecycle | Current status and the history of transitions are both kept |
@@ -188,9 +188,9 @@ Do not code a mapping until product and operations agree on one.
 
 ### C-03. The role lists do not match
 
-One section describes household, agent, technician, refurbisher, recycler, organization, collection point, administrator, and partner.
+One section describes device owner, agent, technician, refurbisher, recycler, organization, collection point, administrator, and partner.
 
-The access-control section lists household, agent, technician, refurbisher, recycler, organization, partner, and administrator. Collection point is missing.
+The access-control section lists device owner, agent, technician, refurbisher, recycler, organization, partner, and administrator. Collection point is missing.
 
 Partner is also the umbrella for repair, refurbishment, recycling, community, development, and government, while technician, refurbisher, and recycler are separate roles.
 
@@ -198,7 +198,7 @@ Do not freeze a permission table until this is decided.
 
 ### C-04. Assessment is described twice
 
-The household journey has one assessment after handover. Agents do a preliminary assessment. Technicians record a diagnosis and can call a device not repairable.
+The device owner journey has one assessment after handover. Agents do a preliminary assessment. Technicians record a diagnosis and can call a device not repairable.
 
 Nobody has said whether the agent assessment is the technician record, an input to it, or a separate event.
 

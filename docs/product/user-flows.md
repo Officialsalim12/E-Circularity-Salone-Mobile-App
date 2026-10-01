@@ -2,7 +2,7 @@
 
 These are the journeys in the product definition. Steps that depend on a missing rule are marked [TBD].
 
-## Household
+## Device owner
 
 ```mermaid
 flowchart TD
@@ -24,14 +24,14 @@ flowchart TD
 
 Not specified:
 
-- If both the household and the agent may register a device, who does it on a normal pickup
+- If both the device owner and the agent may register a device, who does it on a normal pickup
 - Who picks the pathway, and who can override it
-- Which status updates the household sees
+- Which status updates the device owner sees
 - When a contribution or a points entry is written
 
 ## Requesting a pickup
 
-The household picks one or more devices, gives the collection details, gives or picks a time window, and submits. The platform creates the request.
+The device owner picks one or more devices, gives the collection details, gives or picks a time window, and submits. The platform creates the request.
 
 An administrator, or whatever dispatch process we end up with, assigns it to an eligible agent. Eligibility and automatic dispatch are [TBD]. Nothing in the definition requires automatic dispatch.
 
@@ -72,7 +72,7 @@ Handover between them has to appear in the registry. The yard procedure for that
 
 ## Two assessments
 
-Agents do a preliminary assessment. Technicians record a diagnosis and can mark a device not repairable. The household journey shows one assessment step after handover.
+Agents do a preliminary assessment. Technicians record a diagnosis and can mark a device not repairable. The device owner journey shows one assessment step after handover.
 
 We do not know if those are one record or two. That is C-04 in [requirements.md](requirements.md). Do not build either model until that is decided.
 
@@ -84,6 +84,6 @@ Channel per event is [TBD]. The candidates are in-app, SMS, WhatsApp, and email.
 
 ## Other ways in
 
-The definition says we cannot assume a smartphone or reliable data. Channels to consider: the phone app, mobile web, USSD, SMS, WhatsApp, and someone else registering the device for the household. USSD is the menu a person gets by dialing a short code.
+The definition says we cannot assume a smartphone or reliable data. Channels to consider: the phone app, mobile web, USSD, SMS, WhatsApp, and someone else registering the device for the device owner. USSD is the menu a person gets by dialing a short code.
 
 Only the Android app is being built. The other channels stay [TBD] until cost, access, and the pilot operation are checked. Assisted registration has no written procedure.

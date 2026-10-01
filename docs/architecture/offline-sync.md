@@ -2,7 +2,7 @@
 
 Agents have to keep working when mobile data is missing or unreliable. That is a product requirement, not an enhancement.
 
-The offline list in the definition is for field work. Households are expected to cope with a slow connection. A full offline household app is not what was specified.
+The offline list in the definition is for field work. Device owners are expected to cope with a slow connection. A full offline device owner app is not what was specified.
 
 Once tasks are on the phone, an agent with no connection can view them, create collection records, register devices, capture an assessment, capture required photos, record handovers, update the local lifecycle, and queue events.
 

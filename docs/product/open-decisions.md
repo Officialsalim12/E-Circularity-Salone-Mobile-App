@@ -3,7 +3,7 @@
 These are named in the definition and are not specs. Write the decision down, with who decided and the date, and update the note it affects. Do not let a pull request become the policy.
 
 - Exact pilot geography. Freetown is the city. The boundary is not fixed.
-- Final pilot population. About 1,000 households is a proposal.
+- Final pilot population. About 1,000 device owners is a proposal.
 - Final agent count. About 10 to 20 is a proposal.
 - Partner onboarding. Verification steps and required partner data are incomplete.
 - Collection price or incentive. No fee rule exists.
@@ -23,7 +23,7 @@ These are named in the definition and are not specs. Write the decision down, wi
 - Impact method. Categories exist. Public formulas do not.
 - Dispatch. An admin or a dispatch process assigns agents. Eligibility and automation are [TBD].
 - Required photos. "Where required" is not a list.
-- Household visibility. "Where appropriate" is not a field list.
+- Device owner visibility. "Where appropriate" is not a field list.
 - Notice channel per event. In-app, SMS, WhatsApp, email are possible.
 - Collection point login. A place, or an actor with access. Unknown.
 - Admin client. In scope. Technology [TBD].

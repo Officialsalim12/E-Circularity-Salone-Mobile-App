@@ -2,7 +2,7 @@
 
 No schema yet.
 
-We need durable records for users, roles, households, organizations, devices, collections, assessments, repairs, refurbishment, parts recovery, recycling, partners, collection points, Circular Points, notifications, audit events, sync events, and impact measures.
+We need durable records for users, roles, device owners, organizations, devices, collections, assessments, repairs, refurbishment, parts recovery, recycling, partners, collection points, Circular Points, notifications, audit events, sync events, and impact measures.
 
 Use a relational database for that. The product is not chosen.
 

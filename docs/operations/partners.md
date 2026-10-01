@@ -17,7 +17,7 @@ Verification status and operating status have no approved value lists. Capacity 
 | Recycling | Receipt, recycling activity, material recovery when known, downstream confirmation |
 | Community, development, government | No separate workflow |
 
-Repair, refurbishment, and recycling partners are linked to the pathway records. They should see the device detail they need to do the work, not the full household profile by default.
+Repair, refurbishment, and recycling partners are linked to the pathway records. They should see the device detail they need to do the work, not the full device owner profile by default.
 
 Who pays for repair or refurbishment, and how a partner is paid, is [TBD]. Do not encode a price list.
 

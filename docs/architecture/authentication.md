@@ -6,7 +6,7 @@ We need a real sign-in, hashed passwords, protected sessions or tokens, role che
 
 A token is a short-lived proof sent with each request. A session is identity held on the server. The definition allows either. The choice is [TBD].
 
-Roles named for access control: Household, Circularity Agent, Technician, Refurbisher, Recycler, Organization, Partner, Administrator.
+Roles named for access control: Device owner, Circularity Agent, Technician, Refurbisher, Recycler, Organization, Partner, Administrator.
 
 The permission matrix is blocked by C-03 in [../product/requirements.md](../product/requirements.md). Do not invent the missing grants to fill the grid. Collection point access is [TBD].
 
@@ -31,7 +31,7 @@ flowchart TD
   record --> write
 ```
 
-An agent confirms a collection assigned to that agent. The definition does not say an agent can browse every collection. A household sees their own devices and the lifecycle fields that are appropriate. "Appropriate" is [TBD].
+An agent confirms a collection assigned to that agent. The definition does not say an agent can browse every collection. A device owner sees their own devices and the lifecycle fields that are appropriate. "Appropriate" is [TBD].
 
 A partner sees the device fields required for their service, not the full owner profile by default.
 

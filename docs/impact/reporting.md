@@ -16,7 +16,7 @@ Devices: registered, collected, categories, conditions.
 
 Circularity: repaired, refurbished, reused, components recovered, recycled.
 
-Participation: active households, active agents, active partners. "Active" has no time window. [TBD]
+Participation: active device owners, active agents, active partners. "Active" has no time window. [TBD]
 
 ## Admin overview
 
@@ -28,6 +28,6 @@ Reports read the registry and the related records. They do not create another li
 
 Impact reports also need an approved definition from [metrics.md](metrics.md). Until that exists, admins can see operational counts, and those counts should be labeled as operational counts.
 
-Aggregate reports should not list household names, phone numbers, or IMEI values. Looking up one household is a separate authorized screen, not a report export.
+Aggregate reports should not list device owner names, phone numbers, or IMEI values. Looking up one device owner is a separate authorized screen, not a report export.
 
 Export format and scheduled delivery are [TBD].

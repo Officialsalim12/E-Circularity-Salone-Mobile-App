@@ -1,12 +1,12 @@
 # Collection
 
-This is how a device moves from a household or an organization into the network. Dispatch rules, price, and the status clash are not resolved here.
+This is how a device moves from a device owner or an organization into the network. Dispatch rules, price, and the status clash are not resolved here.
 
-The household or organization asks for a pickup and gives a time window and the collection details. An administrator, or a dispatcher, assigns the request to an eligible agent. The agent travels, confirms the person and the device, records the collection, and hands the device on. A collection point is a place where devices can be received and recorded.
+The device owner or organization asks for a pickup and gives a time window and the collection details. An administrator, or a dispatcher, assigns the request to an eligible agent. The agent travels, confirms the person and the device, records the collection, and hands the device on. A collection point is a place where devices can be received and recorded.
 
 Who counts as an eligible agent is [TBD]. "Dispatch mechanism" in the definition does not by itself mean the assignment is automatic.
 
-## What the household does
+## What the device owner does
 
 Pick one or more registered devices. Give the collection details. Pick or give a time window. Submit.
 
@@ -44,6 +44,6 @@ Those lists are not mapped. See C-02 in [../product/requirements.md](../product/
 
 If the assignment is already on the phone, the agent can record the collection with no network. The official record appears when the server accepts the sync.
 
-Organizations can request a bulk collection. Staffing, vehicles, and how that differs from a household request are [TBD].
+Organizations can request a bulk collection. Staffing, vehicles, and how that differs from a device owner request are [TBD].
 
 No fee, incentive payment, or free-of-charge rule is defined. Do not put a charge on the collection flow.

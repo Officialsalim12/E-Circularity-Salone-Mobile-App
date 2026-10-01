@@ -43,7 +43,7 @@ Each feature has three layers:
 
 `core/authentication` is for session or token storage and the authenticated client, when those exist. `features/authentication` is the sign-in screen. Neither is built.
 
-Repair, refurbishment, recycling, registry, points, households, and partners are required product modules. They have no Flutter folders yet because we have not decided if those roles use this app. When that is decided, add a feature folder with the same three layers.
+Repair, refurbishment, recycling, registry, points, device owners, and partners are required product modules. They have no Flutter folders yet because we have not decided if those roles use this app. When that is decided, add a feature folder with the same three layers.
 
 `main.dart` only starts `CircularSaloneApp`. Theme, navigation, and startup checks go on that widget later. Do not hang product screens off `main.dart`.
 

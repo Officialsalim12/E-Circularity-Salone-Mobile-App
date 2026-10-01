@@ -4,7 +4,7 @@ The phone talks to an API. The API is the only door to official data. Shared rul
 
 ```mermaid
 flowchart TB
-  household[Household or organization]
+  deviceOwner[Device owner or organization]
   agent[Agent]
   partner[Repair, refurbishment, or recycling partner]
   admin[Administrator]
@@ -15,7 +15,7 @@ flowchart TB
   data[Relational store]
   external[Outside services]
 
-  household --> mobile
+  deviceOwner --> mobile
   agent --> mobile
   partner --> mobile
   admin --> other
@@ -28,7 +28,7 @@ flowchart TB
 
 The dotted line is not selected yet.
 
-For the pilot, one Android app covers household and agent. Whether partners use that same app is [TBD]. Admin is a separate client. Its stack is [TBD]. Public web, USSD, SMS, and WhatsApp are not selected as ways to use the product. SMS, WhatsApp, and email may later carry notifications.
+For the pilot, one Android app covers device owner and agent. Whether partners use that same app is [TBD]. Admin is a separate client. Its stack is [TBD]. Public web, USSD, SMS, and WhatsApp are not selected as ways to use the product. SMS, WhatsApp, and email may later carry notifications.
 
 Inside the backend these are modules in one service, not a requirement to deploy them apart:
 

@@ -13,7 +13,7 @@ Product Definition 1.0. The other files under `docs/` are the working notes take
 
 Circular Salone is a digital circular-economy platform designed to create a structured, traceable, and technology-enabled system for the collection, assessment, repair, refurbishment, reuse, parts recovery, and responsible recycling of used mobile phones and small electronic devices in Sierra Leone.
 
-The platform connects households and device owners with a network of:
+The platform connects device owners with a network of:
 
 * Circularity Agents
 * Collectors
@@ -43,7 +43,7 @@ The long-term objective is to support a circular economy in which:
 * Valuable components are recovered.
 * Electronic waste is handled through responsible pathways.
 * Young people can participate in the circular economy.
-* Households and organizations have convenient ways to dispose of unwanted devices.
+* Device owners and organizations have convenient ways to dispose of unwanted devices.
 * Circular activity can be measured using reliable digital data.
 
 # 3. Problem Statement
@@ -55,13 +55,13 @@ Electronic devices eventually become unwanted because they are:
 * Replaced
 * Unused
 * Difficult or expensive to repair
-* Stored in households
+* Stored with device owners
 * Sold through informal channels
 * Disposed of without a structured recovery process
 
 This creates several challenges.
 
-## 3.1 Household Challenge
+## 3.1 Device Owner Challenge
 
 Device owners may not know:
 
@@ -119,7 +119,7 @@ Without structured digital records, it becomes difficult to measure:
 
 Circular Salone should:
 
-1. Enable households and organizations to register unwanted electronic devices.
+1. Enable device owners and organizations to register unwanted electronic devices.
 2. Provide convenient collection-request functionality.
 3. Connect collection requests with Circularity Agents.
 4. Digitally record device information.
@@ -152,7 +152,7 @@ The initial deployment should focus on Freetown as a pilot environment.
 
 The concept proposes validating the platform with:
 
-* Approximately 1,000 households
+* Approximately 1,000 device owners
 * Approximately 10–20 Circularity Agents
 * Approximately 5–10 repair/refurbishment partners
 * Downstream recycling partners
@@ -177,9 +177,9 @@ Future expansion may include:
 
 # 6. Product Users and Roles
 
-## 6.1 Household / Device Owner
+## 6.1 Device owner
 
-A household user can:
+A device owner can:
 
 * Create an account.
 * Register a device.
@@ -289,7 +289,7 @@ The platform should be organized into modular capabilities.
 
 * Authentication
 * User Management
-* Household Management
+* Device Owner Management
 * Device Registration
 * Collection Management
 * Circularity Agent Management
@@ -312,7 +312,7 @@ The platform should be organized into modular capabilities.
 
 # 8. Core User Journey
 
-## 8.1 Household Journey
+## 8.1 Device Owner Journey
 
 ```text
 Create Account
@@ -460,7 +460,7 @@ External identifiers such as IMEI should be treated as sensitive data and protec
 
 Collection management should allow the platform to coordinate device pickup.
 
-## Household
+## Device owner
 
 A user can:
 
@@ -660,7 +660,7 @@ Conceptual API domains:
 ```text
 /auth
 /users
-/households
+/device-owners
 /devices
 /collections
 /agents
@@ -686,7 +686,7 @@ The database should support:
 * Users
 * Roles
 * Permissions
-* Households
+* Device owners
 * Organizations
 * Devices
 * Device identifiers
@@ -747,7 +747,7 @@ The system must implement role-based access control.
 
 Roles may include:
 
-* Household
+* Device owner
 * Circularity Agent
 * Technician
 * Refurbisher
@@ -901,7 +901,7 @@ Core dashboard areas:
 
 ### Users
 
-* Household users
+* Device owners
 * Agents
 * Partners
 * Organizations
@@ -947,7 +947,7 @@ Possible metrics include:
 
 ## Participation
 
-* Active households
+* Active device owners
 * Active agents
 * Active partners
 
@@ -982,7 +982,7 @@ Potential impact categories:
 
 ### Social
 
-* Household participation
+* Device owner participation
 * Community participation
 * Digital inclusion
 
@@ -1250,7 +1250,7 @@ A user or authorized agent can register an eligible device and receive a unique 
 
 ## Collection
 
-A household can request collection and the system can assign the request to an eligible agent.
+A device owner can request collection and the system can assign the request to an eligible agent.
 
 ## Agent
 
@@ -1419,7 +1419,7 @@ The target architecture can be represented as:
                           │
         ┌─────────────────┼─────────────────┐
         │                 │                 │
-     Household          Agent            Partner
+     Device owner          Agent            Partner
         │                 │                 │
         └─────────────────┼─────────────────┘
                           │

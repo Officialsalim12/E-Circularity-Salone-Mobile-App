@@ -15,7 +15,7 @@ Nothing was added because other platforms usually have it.
 | Sign-in | Each role gets in and only reaches the actions they are allowed |
 | Users | People and organizations on the platform |
 | Device registration | An eligible device gets a unique internal id |
-| Collection | A household can request pickup. The system can assign an eligible agent |
+| Collection | A device owner can request pickup. The system can assign an eligible agent |
 | Agent | An agent sees assigned pickups and can confirm collection |
 | Assessment | An authorized person can record an assessment |
 | Lifecycle | Current status, plus the history of real transitions |
@@ -26,7 +26,7 @@ Nothing was added because other platforms usually have it.
 | Offline sync | An agent can write the supported records offline and sync them later |
 | Reporting | Admins can see the core operational counts |
 
-Households, parts recovery, collection points, partners, and the audit log are named modules. The registry and the admin scope need them, so they sit in the first release even where the screens are not drawn.
+Device owners, parts recovery, collection points, partners, and the audit log are named modules. The registry and the admin scope need them, so they sit in the first release even where the screens are not drawn.
 
 ## Named, rules not ready
 
@@ -75,7 +75,7 @@ Overview: devices registered, requests, completed collections, devices in proces
 
 Operations: collections, agents, partners, devices, lifecycle.
 
-Users: households, agents, partners, organizations, administrators.
+Users: device owners, agents, partners, organizations, administrators.
 
 Reports: collection, lifecycle, circularity, impact, agent activity, partner activity.
 

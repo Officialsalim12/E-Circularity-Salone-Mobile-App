@@ -4,11 +4,11 @@ A person sees the records their job needs. Admin actions need a higher grant.
 
 The definition does not use one role list. That clash is C-03 in [requirements.md](requirements.md). The notes below repeat what the definition says. They do not merge the lists.
 
-## Household
+## Device owner
 
 Can create an account, register a device, request collection, see collection status, see lifecycle detail where that is appropriate, get notifications, earn Circular Points where the rules apply, and see their own contribution history.
 
-Point rules are [TBD]. Which lifecycle fields a household sees is [TBD].
+Point rules are [TBD]. Which lifecycle fields a device owner sees is [TBD].
 
 ## Circularity Agent
 
@@ -62,7 +62,7 @@ Technician, refurbisher, and recycler are also their own roles. We have not deci
 
 ## Access-control list in the definition
 
-Household, Circularity Agent, Technician, Refurbisher, Recycler, Organization, Partner, Administrator.
+Device owner, Circularity Agent, Technician, Refurbisher, Recycler, Organization, Partner, Administrator.
 
 Collection point is described as a participant and is missing from this list.
 

@@ -22,7 +22,7 @@ Lifecycle rules, point rules, and permission rules do not belong in the controll
 
 ## Areas
 
-Auth, users, households, organizations, devices and identifiers, collections and agents, assessments, repairs, refurbishment, parts recovery, recycling, registry and lifecycle history, partners, collection points, the points ledger, notifications, audit, reporting, and sync intake.
+Auth, users, device owners, organizations, devices and identifiers, collections and agents, assessments, repairs, refurbishment, parts recovery, recycling, registry and lifecycle history, partners, collection points, the points ledger, notifications, audit, reporting, and sync intake.
 
 ## Sync intake
 

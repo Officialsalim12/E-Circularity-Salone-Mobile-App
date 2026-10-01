@@ -10,7 +10,7 @@ People keep broken, old, or unused phones because they do not know where to take
 
 ## What "good" looks like later
 
-Devices stay in use longer. Repair is easier to reach. Reusable phones go back to someone who will use them. Parts and materials are recovered on purpose. Young people can work in the network as Circularity Agents. Households and organizations have a straightforward way to hand a device over. The numbers come from the registry, not from a slide.
+Devices stay in use longer. Repair is easier to reach. Reusable phones go back to someone who will use them. Parts and materials are recovered on purpose. Young people can work in the network as Circularity Agents. Device owners and organizations have a straightforward way to hand a device over. The numbers come from the registry, not from a slide.
 
 ## What the first release has to prove
 
@@ -31,7 +31,7 @@ Phones, smartphones, feature phones, and small consumer electronics. Freetown fi
 
 These figures are proposals, not a commitment:
 
-- about 1,000 households
+- about 1,000 device owners
 - about 10 to 20 agents
 - about 5 to 10 repair or refurbishment partners
 - recycling partners downstream

@@ -13,7 +13,7 @@ No endpoint list is approved. The names below come from the definition. Paths an
 ```text
 /auth
 /users
-/households
+/device-owners
 /devices
 /collections
 /agents
@@ -54,7 +54,7 @@ An error tells the client whether validation failed, authorization failed, or th
 
 These are jobs, not URLs.
 
-Auth signs a person in and out and establishes the role. Users and households cover the account. Devices register a device and return the fields that role may see. Collections create a request, assign it, and move collection status. Agents cover the profile and assigned work. Assessments record the assessment. Repairs, refurbishment, parts, and recycling record pathway work. Registry returns the history the caller may see. Partners cover partner records and partner-scoped activity. Points return the ledger. Only an admin posts an adjustment they are allowed to make. Notifications register a destination and record delivery where a channel exists. Reports serve admin metrics and the narrower reports other roles are allowed. Admin covers user, config, and workflow management.
+Auth signs a person in and out and establishes the role. Users and device owners cover the account. Devices register a device and return the fields that role may see. Collections create a request, assign it, and move collection status. Agents cover the profile and assigned work. Assessments record the assessment. Repairs, refurbishment, parts, and recycling record pathway work. Registry returns the history the caller may see. Partners cover partner records and partner-scoped activity. Points return the ledger. Only an admin posts an adjustment they are allowed to make. Notifications register a destination and record delivery where a channel exists. Reports serve admin metrics and the narrower reports other roles are allowed. Admin covers user, config, and workflow management.
 
 Assignment may be an admin action rather than an open edit on the collection. That URL is [TBD], with the dispatch rules.
 

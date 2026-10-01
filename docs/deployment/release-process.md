@@ -16,7 +16,7 @@ The API starts at `/api/v1/`.
 6. A named person approves production. That role is [TBD].
 7. Production config and secrets are confirmed.
 8. The build is deployed.
-9. The core journey is checked in production with a test device, not with a household that did not agree to be the test.
+9. The core journey is checked in production with a test device, not with a device owner who did not agree to be the test.
 10. The changelog is updated.
 
 How the Android build reaches phones is [TBD]. Play Store, or a direct install file. Store accounts are not part of this repo.
