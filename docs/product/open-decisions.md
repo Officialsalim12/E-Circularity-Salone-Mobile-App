@@ -3,8 +3,6 @@
 These are named in the definition and are not specs. Write the decision down, with who decided and the date, and update the note it affects. Do not let a pull request become the policy.
 
 - Exact pilot geography. Freetown is the city. The boundary is not fixed.
-- Final pilot population. About 1,000 device owners is a proposal.
-- Final agent count. About 10 to 20 is a proposal.
 - Partner onboarding. Verification steps and required partner data are incomplete.
 - Collection price or incentive. No fee rule exists.
 - Points earning rules. The example activities are not a policy.

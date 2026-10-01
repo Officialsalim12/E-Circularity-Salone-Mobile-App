@@ -29,11 +29,11 @@ If that works in the pilot, we have a base. The first release is there to prove 
 
 Phones, smartphones, feature phones, and small consumer electronics. Freetown first.
 
-These figures are proposals, not a commitment:
+The pilot targets are:
 
-- about 1,000 device owners
-- about 10 to 20 agents
-- about 5 to 10 repair or refurbishment partners
+- 1,000 device owners
+- 20 agents
+- 10 repair or refurbishment partners
 - recycling partners downstream
 - one platform
 

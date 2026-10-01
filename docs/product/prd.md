@@ -150,15 +150,13 @@ The initial deployment should focus on Freetown as a pilot environment.
 
 ## 5.2 Pilot Scope
 
-The concept proposes validating the platform with:
+The pilot targets are:
 
-* Approximately 1,000 device owners
-* Approximately 10–20 Circularity Agents
-* Approximately 5–10 repair/refurbishment partners
+* 1,000 device owners
+* 20 Circularity Agents
+* 10 repair/refurbishment partners
 * Downstream recycling partners
 * One centralized digital platform
-
-These numbers should be treated as **proposed pilot targets requiring validation**, rather than fixed commitments.
 
 ## 5.3 Future Scope
 
@@ -1321,8 +1319,6 @@ Technology decisions must reflect Sierra Leone's connectivity, operational, econ
 The following areas require validation before being treated as final specifications:
 
 * Exact pilot geography
-* Final pilot population
-* Final number of agents
 * Partner onboarding requirements
 * Collection pricing or incentive model
 * Circular Points earning rules

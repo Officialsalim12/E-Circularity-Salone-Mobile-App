@@ -2,7 +2,7 @@
 
 Circular Salone tracks used phones and small electronics in Sierra Leone from registration through collection, assessment, repair, refurbishment, parts recovery, or recycling.
 
-The record of that journey is the Circularity Registry. The pilot is 1,000 device owners in Freetown. It has to show that a real device can be collected by a real agent, assessed, sent down a circular path, and recorded the whole way.
+The record of that journey is the Circularity Registry. The pilot is 1,000 device owners in Freetown, with 20 agents and 10 repair and refurbishment partners. It has to show that a real device can be collected by a real agent, assessed, sent down a circular path, and recorded the whole way.
 
 Nothing in the app does that yet. This repository has the project notes, the architecture notes, and an Android app shell.
 
@@ -13,7 +13,7 @@ Nothing in the app does that yet. This repository has the project notes, the arc
 | Mobile | Flutter, Android |
 | Admin and client | Web |
 | Database | Neon PostgreSQL |
-| Pilot | 1,000 device owners in Freetown |
+| Pilot | 1,000 device owners in Freetown, 20 agents, 10 repair and refurbishment partners |
 
 Where a rule is missing, the docs say **[TBD]**. Do not fill those gaps in code.
 

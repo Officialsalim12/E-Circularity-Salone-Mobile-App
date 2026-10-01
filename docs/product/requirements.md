@@ -28,7 +28,7 @@ Point rules for item 10 are [TBD]. The ledger requirement still stands.
 
 Phones, smartphones, feature phones, and small consumer electronics. Pilot focus is Freetown.
 
-Proposed scale, still to be checked: about 1,000 device owners, 10 to 20 agents, 5 to 10 repair or refurbishment partners, recycling partners, one platform.
+Pilot scale: 1,000 device owners, 20 agents, 10 repair or refurbishment partners, recycling partners, one platform.
 
 Payments are [TBD]. They are not an implied feature. The rest of the deferred list is in [features.md](features.md).
 
