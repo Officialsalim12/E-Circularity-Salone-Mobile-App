@@ -1,0 +1,32 @@
+---
+description: Circular Salone repo context, docs-first workflow, and guardrails
+alwaysApply: true
+---
+
+# Circular Salone — project rules
+
+## What this is
+
+Mobile-first circular economy platform for used phones and small electronics in Sierra Leone. The **Circularity Registry** is the system of record for device journeys. Pilot scope: Freetown, 1,000 device owners, 20 agents, 10 repair/refurb partners.
+
+## Repository layout
+
+- `frontend/mobile/` — Flutter Android client (only mobile app in repo today)
+- `backend/`, `database/` — not started; follow docs when added
+- `docs/` — product, architecture, operations; **source of truth** for requirements
+
+Read [docs/README.md](docs/README.md) and the relevant product/architecture note before non-trivial changes.
+
+## Non-negotiables
+
+- Anything marked **[TBD]** or open clashes (e.g. C-01–C-06 in [docs/product/open-decisions.md](docs/product/open-decisions.md)): do **not** invent behavior in code.
+- **Server decides** official lifecycle, points, and authorization. The app captures input, caches assignments, queues offline work, and syncs—it does not enforce official business rules.
+- Use **internal Device ID** as primary identifier. Treat **IMEI and serial numbers as sensitive**—never log them, tokens, passwords, or personal data.
+- No hard-coded environment URLs, API keys, or pilot-specific owner data; use env/config patterns.
+- Do not enable iOS/web/desktop or add dependencies (HTTP, DB, camera, maps, state libs) until a feature needs them; **document why** in the change.
+- Follow the **engineering discipline** rule (`.cursor/rules/engineering-discipline.mdc`): minimal diffs, no AI filler, architecture-aligned layout, doc sync, sparse tests, no cruft files.
+- Only create git commits when the user explicitly asks.
+
+## Contributing shape
+
+Branches: `feature/…`, `fix/…`, `docs/…`, `chore/…`. PRs should tie to requirements, note security impact for auth/uploads/identifiers, and include screenshots for UI changes.

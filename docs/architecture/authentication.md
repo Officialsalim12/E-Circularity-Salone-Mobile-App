@@ -6,6 +6,8 @@ We need a real sign-in, hashed passwords, protected sessions or tokens, role che
 
 A token is a short-lived proof sent with each request. A session is identity held on the server. The definition allows either. The choice is [TBD].
 
+The mobile sign-in and create-account screens collect either an email address or a Sierra Leone phone number, with a password. That is input capture only. On create account, phone signup asks for the number, then six code boxes, before the name and password. The resend countdown is display only. No code is sent or checked until an SMS provider is chosen. The server still checks identity. Forgot password collects a registered email address or Sierra Leone phone number, then a 6-digit code, then a new password. A local success screen follows. No code is sent or checked, and the new password is not saved. Account recovery is still [TBD].
+
 Roles named for access control: Device owner, Circularity Agent, Technician, Refurbisher, Recycler, Organization, Partner, Administrator.
 
 The permission matrix is blocked by C-03 in [../product/requirements.md](../product/requirements.md). Do not invent the missing grants to fill the grid. Collection point access is [TBD].

@@ -1,0 +1,28 @@
+---
+description: UI tokens and brand usage for Circular Salone mobile
+globs: frontend/mobile/**/*
+alwaysApply: false
+---
+
+# UI and brand
+
+Design tokens live in [frontend/mobile/design.json](frontend/mobile/design.json). Prefer those colors and typography over ad-hoc values.
+
+| Role | Token (example) |
+| --- | --- |
+| Primary green | `#19A10F` |
+| Secondary blue | `#0045A5` |
+| Surfaces | `#FFFFFF` / `#F7F9F8` |
+| Text | `#172B2A`, `#60716F` |
+
+Personality: clean, friendly, sustainability-focused—bright surfaces, restrained green emphasis, soft rounded shapes, generous spacing (see `designSystem` in `design.json`).
+
+## Logo
+
+Full wordmark: `assets/brand/circular_salone_logo.png` via `Image.asset('assets/brand/circular_salone_logo.png')`.
+
+Do not recolor or distort the logo. For launcher icons, use the circular mark (arrows + leaf), not the wide wordmark, unless product specifies otherwise.
+
+## Permissions
+
+Declare Android permissions only with the feature that needs them, with in-app explanation in plain language.

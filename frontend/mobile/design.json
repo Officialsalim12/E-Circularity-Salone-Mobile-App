@@ -1,0 +1,424 @@
+{
+  "designSystem": {
+    "designStyle": {
+      "name": "Clean, friendly, sustainability-focused mobile product UI",
+      "personality": [
+        "modern",
+        "approachable",
+        "trustworthy",
+        "practical",
+        "lightweight",
+        "community-oriented"
+      ],
+      "aesthetic": "Bright, uncluttered interfaces with a white foundation, restrained green emphasis, dark readable typography, and soft rounded surfaces.",
+      "density": "Low-to-medium; prioritize scanability and clear actions over information packing.",
+      "hierarchy": "One clear page-level purpose, compact supporting copy, then grouped actions or information.",
+      "whitespace": "Use generous outer margins and consistent internal padding; whitespace separates groups rather than decorative ornament."
+    },
+    "designTokens": {
+      "colors": {
+        "primary": "#19A10F",
+        "primaryDark": "#14850C",
+        "primaryLight": "#E8F5E7",
+        "secondary": "#0045A5",
+        "accent": "#19A10F",
+        "background": "#F7F9F8",
+        "surface": "#FFFFFF",
+        "card": "#FFFFFF",
+        "textPrimary": "#172B2A",
+        "textSecondary": "#60716F",
+        "textMuted": "#8A9996",
+        "border": "#E3EAE7",
+        "divider": "#EDF1EF",
+        "success": "#168653",
+        "warning": "#D98A18",
+        "error": "#D94B4B",
+        "information": "#2878C7",
+        "hover": "#F0F7F3",
+        "active": "#DCEFE5",
+        "focus": "#73B99A",
+        "disabled": "#B8C4C0",
+        "disabledSurface": "#F0F3F1",
+        "overlay": "rgba(12, 29, 25, 0.42)"
+      },
+      "typography": {
+        "fontFamily": {
+          "preferred": "Inter",
+          "fallback": [
+            "SF Pro Display",
+            "Roboto",
+            "Arial",
+            "sans-serif"
+          ],
+          "characteristics": "Neutral contemporary sans-serif with high legibility at small sizes."
+        },
+        "scale": {
+          "display": {
+            "size": 32,
+            "weight": 700,
+            "lineHeight": 1.15,
+            "letterSpacing": -0.6
+          },
+          "h1": {
+            "size": 26,
+            "weight": 700,
+            "lineHeight": 1.2,
+            "letterSpacing": -0.4
+          },
+          "h2": {
+            "size": 22,
+            "weight": 650,
+            "lineHeight": 1.25,
+            "letterSpacing": -0.25
+          },
+          "h3": {
+            "size": 18,
+            "weight": 600,
+            "lineHeight": 1.3,
+            "letterSpacing": 0
+          },
+          "body": {
+            "size": 14,
+            "weight": 400,
+            "lineHeight": 1.5,
+            "letterSpacing": 0
+          },
+          "bodyEmphasis": {
+            "size": 14,
+            "weight": 600,
+            "lineHeight": 1.45,
+            "letterSpacing": 0
+          },
+          "label": {
+            "size": 12,
+            "weight": 600,
+            "lineHeight": 1.35,
+            "letterSpacing": 0.1
+          },
+          "caption": {
+            "size": 11,
+            "weight": 400,
+            "lineHeight": 1.4,
+            "letterSpacing": 0.1
+          },
+          "button": {
+            "size": 14,
+            "weight": 600,
+            "lineHeight": 1.2,
+            "letterSpacing": 0
+          }
+        },
+        "rules": [
+          "Use sentence case.",
+          "Reserve the heaviest weights for page titles and primary values.",
+          "Avoid long all-caps labels."
+        ]
+      },
+      "spacing": {
+        "unit": 4,
+        "scale": {
+          "space_1": 4,
+          "space_2": 8,
+          "space_3": 12,
+          "space_4": 16,
+          "space_5": 20,
+          "space_6": 24,
+          "space_8": 32,
+          "space_10": 40,
+          "space_12": 48,
+          "space_16": 64
+        },
+        "usage": {
+          "space_1": "Icon-to-label micro gap",
+          "space_2": "Tight control internals and compact list gaps",
+          "space_3": "Related field and list-item spacing",
+          "space_4": "Standard component padding",
+          "space_5": "Card content grouping",
+          "space_6": "Section internal separation",
+          "space_8": "Between major content groups",
+          "space_10": "Large section separation",
+          "space_12": "Screen-level vertical breathing room",
+          "space_16": "Large empty or hero regions"
+        }
+      },
+      "radii": {
+        "xs": 6,
+        "sm": 9,
+        "md": 12,
+        "lg": 16,
+        "xl": 20,
+        "pill": 999
+      },
+      "borders": {
+        "hairline": "1px solid #EDF1EF",
+        "default": "1px solid #E3EAE7",
+        "emphasis": "1px solid #C8DAD2",
+        "focus": "2px solid #73B99A"
+      },
+      "shadows": {
+        "none": "none",
+        "card": "0 2px 10px rgba(20, 45, 36, 0.05)",
+        "raised": "0 5px 18px rgba(20, 45, 36, 0.09)",
+        "floating": "0 8px 24px rgba(20, 45, 36, 0.14)",
+        "modal": "0 16px 40px rgba(15, 35, 30, 0.18)"
+      },
+      "sizing": {
+        "mobilePageGutter": 16,
+        "tabletPageGutter": 24,
+        "desktopPageGutter": 32,
+        "contentMaxWidth": 1120,
+        "formMaxWidth": 440,
+        "buttonHeight": 48,
+        "buttonHeightCompact": 40,
+        "inputHeight": 48,
+        "listRowMinHeight": 56,
+        "bottomNavigationHeight": 68,
+        "iconSmall": 16,
+        "iconDefault": 20,
+        "iconLarge": 24,
+        "avatarSmall": 32,
+        "avatarDefault": 40,
+        "avatarLarge": 56,
+        "touchTargetMin": 44,
+        "gridGap": 16
+      }
+    },
+    "layout": {
+      "page": {
+        "background": "Use the background token; reserve pure white for content surfaces.",
+        "gutter": "Use the breakpoint-specific page gutter token.",
+        "maxWidth": "Center wide content and constrain reading/form areas independently.",
+        "verticalRhythm": "Use the spacing scale; separate page header, content sections, and persistent navigation clearly."
+      },
+      "structure": {
+        "mobile": "Single-column content flow with persistent bottom navigation for primary app destinations.",
+        "tablet": "Use wider gutters and two-column layouts only when each column remains comfortably readable.",
+        "desktop": "Use a centered content region; introduce a side navigation only when the product information architecture requires it."
+      },
+      "alignment": "Align headings, cards, fields, and list content to a shared page grid.",
+      "grids": "Use a 4px spacing base and 16px default grid gap; collapse grids before reducing card readability.",
+      "headers": "Keep top bars compact, with clear back/navigation affordance and one primary title area.",
+      "navigation": "Keep primary navigation consistent across authenticated screens; visually distinguish the central/high-priority action through position and modest elevation, not a new color palette."
+    },
+    "components": {
+      "buttons": {
+        "structure": "Single-line label with optional leading or trailing icon.",
+        "primary": "Solid primary green, white semibold label, 48px height, 12px radius.",
+        "secondary": "White or pale-green surface, primary-colored label, 1px border.",
+        "tertiary": "Text-only, no container; use primary color.",
+        "padding": "16px horizontal; maintain 44px minimum touch target.",
+        "states": {
+          "hover": "Slightly darken primary or tint neutral surface.",
+          "pressed": "Use primaryDark and subtle scale/opacity feedback.",
+          "disabled": "Muted text and disabled surface; no shadow.",
+          "loading": "Keep width stable and replace or accompany label with a small progress indicator."
+        }
+      },
+      "cards": {
+        "structure": "Surface container with optional header, body, and action area.",
+        "padding": 16,
+        "radius": 16,
+        "border": "Default border; use card shadow only when separation from the page needs reinforcement.",
+        "spacing": 12,
+        "rules": "Avoid nested cards unless hierarchy genuinely requires them."
+      },
+      "inputs": {
+        "structure": "Optional label above a full-width control; supporting or validation text below.",
+        "height": 48,
+        "padding": "12px horizontal",
+        "radius": 12,
+        "surface": "#FFFFFF",
+        "border": "Default border",
+        "text": "14px body",
+        "icon": "20px, aligned inside the leading or trailing edge with 12px inset.",
+        "states": {
+          "focus": "Focus border plus accessible focus ring.",
+          "error": "Error border and concise helper text.",
+          "disabled": "Disabled surface and muted text."
+        }
+      },
+      "searchFields": {
+        "structure": "Input with leading search affordance and optional trailing filter/action.",
+        "height": 44,
+        "radius": "pill",
+        "background": "#FFFFFF",
+        "border": "Default border"
+      },
+      "navigation": {
+        "bottom": "Fixed mobile bar with evenly spaced destinations, compact line icons, and short labels.",
+        "selected": "Primary color icon and label; inactive items use muted text.",
+        "centralAction": "May sit slightly above the bar in a circular or rounded container; maintain clear separation and a 44px or larger target.",
+        "safeArea": "Respect device bottom inset and avoid covering scrollable content."
+      },
+      "tabs": {
+        "structure": "Compact horizontal row with clear selected indicator.",
+        "selected": "Primary color label with underline or pale primary surface.",
+        "unselected": "Secondary text.",
+        "height": 40
+      },
+      "badges": {
+        "structure": "Compact pill with short label.",
+        "padding": "4px 8px",
+        "radius": "pill",
+        "typography": "11–12px semibold",
+        "variants": "Use semantic success, warning, error, or information colors with a very light matching background."
+      },
+      "dropdowns": {
+        "trigger": "Match input height, border, and radius.",
+        "menu": "White surface, 12px radius, floating shadow, 8px item padding.",
+        "selection": "Use primary tint and a check/selection indicator."
+      },
+      "tables": {
+        "structure": "Use only for dense comparative data; prefer stacked rows on mobile.",
+        "header": "Small semibold muted text.",
+        "rows": "Minimum 52px height with subtle dividers.",
+        "surface": "White; avoid heavy gridlines."
+      },
+      "modals": {
+        "structure": "Centered dialog on desktop; bottom sheet or full-height panel on narrow mobile where appropriate.",
+        "padding": 24,
+        "radius": 20,
+        "overlay": "Use overlay token.",
+        "shadow": "Modal elevation token."
+      },
+      "alerts": {
+        "structure": "Icon, concise message, optional action; align icon to first text line.",
+        "padding": 12,
+        "radius": 12,
+        "color": "Use semantic tint backgrounds with readable foreground contrast."
+      },
+      "avatars": {
+        "shape": "Circular",
+        "sizes": "Use avatar sizing tokens.",
+        "fallback": "Initials or neutral silhouette on a pale neutral/primary tint."
+      },
+      "lists": {
+        "row": "Leading icon/avatar, flexible text stack, optional trailing status or chevron.",
+        "minHeight": 56,
+        "padding": "12px 0",
+        "divider": "Subtle divider inset to align with text content.",
+        "spacing": 8
+      },
+      "sections": {
+        "structure": "Section heading and optional supporting action followed by grouped content.",
+        "headingGap": 12,
+        "sectionGap": 24
+      },
+      "emptyStates": {
+        "structure": "Simple illustration or icon, short heading, one supporting sentence, optional primary action.",
+        "alignment": "Centered within available content area.",
+        "spacing": 12
+      },
+      "loadingStates": {
+        "behavior": "Use restrained progress indicators or skeleton surfaces that preserve final layout dimensions.",
+        "color": "Primary for active progress; neutral surfaces for skeletons."
+      }
+    },
+    "iconography": {
+      "style": "Consistent simple outline icons with rounded joins; use filled treatment only for selected or semantic emphasis.",
+      "sizes": {
+        "small": 16,
+        "default": 20,
+        "large": 24
+      },
+      "stroke": "Approximately 1.8–2px at 24px scale.",
+      "alignment": "Optically center icons with text; use 8px gap for inline icon-label pairs.",
+      "rules": [
+        "Use one icon family throughout.",
+        "Do not mix detailed illustrative icons with minimal interface icons.",
+        "Keep icons secondary to labels unless the control is universally recognizable."
+      ]
+    },
+    "visualHierarchy": {
+      "principles": [
+        "Establish hierarchy primarily through type scale, weight, and spacing.",
+        "Use primary green for the main action and selected navigation state, not for every decorative element.",
+        "Use surface contrast and subtle borders to group related information.",
+        "Keep secondary metadata smaller and lower contrast while preserving accessibility.",
+        "Limit each view to one visually dominant action where possible."
+      ],
+      "order": "Page purpose → primary action or key information → supporting groups → secondary metadata."
+    },
+    "responsive": {
+      "breakpoints": {
+        "mobile": "0–599px",
+        "tablet": "600–899px",
+        "desktop": "900px and above"
+      },
+      "mobile": {
+        "layout": "Single column; full-width controls; bottom navigation for core app areas.",
+        "gutter": 16,
+        "cards": "Stack vertically; avoid multi-column content cards.",
+        "type": "Use defined scale; reduce display headings by one step only when needed."
+      },
+      "tablet": {
+        "layout": "Use 2 columns for independent content groups when useful.",
+        "gutter": 24,
+        "navigation": "Retain compact navigation or adapt to a rail based on app shell."
+      },
+      "desktop": {
+        "layout": "Centered max-width content; optional sidebar plus main content.",
+        "gutter": 32,
+        "forms": "Constrain forms to formMaxWidth rather than stretching.",
+        "navigation": "Use a persistent side rail only if the overall application shell supports it."
+      },
+      "general": "Preserve touch target sizes, readable line lengths, and content order; reflow rather than simply shrink."
+    },
+    "interactionStates": {
+      "default": "White surface, neutral border, readable text.",
+      "hover": "Subtle surface tint or small elevation increase; avoid dramatic movement.",
+      "focus": "Visible focus ring using the focus token.",
+      "active": "Primary tint or primaryDark treatment with immediate feedback.",
+      "selected": "Primary color plus a secondary cue such as underline, check, or background tint.",
+      "disabled": "Muted foreground and disabled surface; maintain legibility.",
+      "loading": "Stable geometry with a small progress indicator.",
+      "error": "Semantic error color, concise message, and clear recovery path."
+    },
+    "motion": {
+      "durationsMs": {
+        "micro": 120,
+        "standard": 200,
+        "emphasis": 280
+      },
+      "easing": "cubic-bezier(0.2, 0, 0, 1)",
+      "guidelines": [
+        "Use short transitions for color, opacity, and elevation.",
+        "Use modest slide/fade for sheets and dialogs.",
+        "Avoid bouncy, ornamental, or continuous motion.",
+        "Respect reduced-motion preferences.",
+        "Keep loading indicators calm and unobtrusive."
+      ]
+    },
+    "mediaRules": {
+      "imagery": "Use clean, purposeful imagery with consistent treatment; avoid decorative images that compete with task completion.",
+      "illustrations": "Prefer simple, friendly, low-detail illustrations that use the established palette.",
+      "cropping": "Use intentional aspect ratios and consistent corner treatment; do not stretch assets.",
+      "backgrounds": "Keep interface backgrounds quiet and low contrast so content remains dominant."
+    },
+    "consistencyRules": [
+      "Do not introduce arbitrary colors; extend the semantic palette only when a real use case requires it.",
+      "Use the spacing scale and sizing tokens instead of one-off values.",
+      "Keep corner radii consistent by component category.",
+      "Use shadows sparingly; prefer spacing and borders for grouping.",
+      "Maintain the typography scale and sentence-case labels.",
+      "Keep primary green reserved for meaningful actions and selected states.",
+      "Preserve the established mobile navigation pattern across authenticated screens.",
+      "Use consistent icon family, stroke weight, and optical alignment.",
+      "Design for accessible contrast and minimum touch targets.",
+      "Avoid unnecessary gradients, glossy effects, heavy outlines, and dense decoration."
+    ],
+    "aiImplementationGuidelines": [
+      "Treat this JSON as the source of truth for visual decisions when implementing new interface elements.",
+      "Use existing design tokens before creating new values; if a token is missing, choose the nearest existing token.",
+      "Follow the component specifications and extend shared components rather than creating visually divergent one-off controls.",
+      "Maintain the established spacing rhythm, typography hierarchy, color semantics, and radius scale.",
+      "Apply responsive behavior by reflowing content according to the defined breakpoints; do not merely scale down desktop layouts.",
+      "Keep persistent application navigation consistent across related authenticated views.",
+      "Do not copy individual reference screens literally; infer the appropriate structure for the new task from reusable patterns.",
+      "When a pattern is not explicitly defined, make the smallest design decision necessary to remain consistent with this system.",
+      "Do not introduce a new visual style, palette, icon family, or motion language without a clear product reason.",
+      "Prefer accessible, semantic components and preserve keyboard focus visibility and touch target dimensions.",
+      "Keep content concise and layouts breathable; avoid adding decorative elements that do not improve comprehension or task completion."
+    ]
+  }
+}

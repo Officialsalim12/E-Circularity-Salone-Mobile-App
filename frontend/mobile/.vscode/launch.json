@@ -1,0 +1,40 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "Circular Salone (Android)",
+      "request": "launch",
+      "type": "dart",
+      "program": "lib/main.dart",
+      "args": ["-d", "android"]
+    },
+    {
+      "name": "Circular Salone (iOS Simulator)",
+      "request": "launch",
+      "type": "dart",
+      "program": "lib/main.dart",
+      "args": ["-d", "ios"]
+    },
+    {
+      "name": "Circular Salone (iPhone — This PC's iPhone)",
+      "request": "launch",
+      "type": "dart",
+      "program": "lib/main.dart",
+      "deviceId": "00008130-001A1C8E1E98001C"
+    },
+    {
+      "name": "Circular Salone (Chrome — phone width)",
+      "request": "launch",
+      "type": "dart",
+      "program": "lib/main.dart",
+      "args": [
+        "-d",
+        "chrome",
+        "--web-browser-flag=--window-size=430,932",
+        "--web-browser-flag=--enable-webgl",
+        "--web-browser-flag=--enable-webgl2",
+        "--web-browser-flag=--ignore-gpu-blocklist"
+      ]
+    }
+  ]
+}

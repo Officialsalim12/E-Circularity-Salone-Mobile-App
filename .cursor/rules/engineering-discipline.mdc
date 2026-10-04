@@ -1,0 +1,62 @@
+---
+description: Avoid AI bloat, stay on architecture, sync docs, minimal tests and files
+alwaysApply: true
+---
+
+# Engineering discipline
+
+Write code like a teammate on this repo—not generic AI output.
+
+## Avoid AI bloat
+
+- **Smallest correct change.** No drive-by refactors, no “while we’re here” rewrites, no new layers unless architecture docs call for them.
+- **Match existing patterns** in the nearest feature or `core/` module: naming, folder depth, error handling, widget structure.
+- **No filler:** skip tutorial comments, redundant docstrings, emoji in code/docs, boilerplate READMEs per folder, and markdown the user did not ask for.
+- **No over-engineering:** no extra interfaces, base classes, or config files for one use; no premature abstractions “for flexibility.”
+- **No speculative features** or placeholder screens/APIs not tied to [docs/product/requirements.md](docs/product/requirements.md).
+- Prefer **plain, direct code** over cleverness. If a helper is used once, keep it inline.
+
+## Architecture first
+
+Before adding files, read the layout for that area:
+
+| Area | Follow |
+| --- | --- |
+| Mobile Flutter | [docs/architecture/mobile-app.md](docs/architecture/mobile-app.md) — `presentation` / `domain` / `data`, `core/` vs `features/` |
+| Backend (when present) | [docs/architecture/backend.md](docs/architecture/backend.md) |
+| API / auth / sync / DB | Matching notes under [docs/architecture/](docs/architecture/) |
+
+**Do not** put business rules in widgets, HTTP in presentation, or widgets in data. **Do not** create parallel folder schemes (e.g. `services/` at root of `lib/` if docs say `features/.../data`).
+
+New packages, platforms (iOS/web), or top-level modules require an **architecture or product decision in docs first**, then code.
+
+## Docs must stay in sync
+
+When a change alters behavior, contracts, or structure, update the **same PR** (do not leave docs stale):
+
+| Change | Update |
+| --- | --- |
+| Mobile structure, layers, packages | [docs/architecture/mobile-app.md](docs/architecture/mobile-app.md) |
+| API shapes or endpoints | [docs/architecture/api.md](docs/architecture/api.md) |
+| Auth, security, identifiers | [docs/architecture/authentication.md](docs/architecture/authentication.md), [docs/architecture/security.md](docs/architecture/security.md) |
+| Offline / sync behavior | [docs/architecture/offline-sync.md](docs/architecture/offline-sync.md) |
+| Product behavior or roles | [docs/product/requirements.md](docs/product/requirements.md), [docs/product/features.md](docs/product/features.md) as needed |
+| Open questions resolved | [docs/product/open-decisions.md](docs/product/open-decisions.md) |
+| Setup or dev workflow | [docs/development/setup.md](docs/development/setup.md), [docs/development/coding-guidelines.md](docs/development/coding-guidelines.md) |
+
+If code and docs would disagree, **update the doc or the decision record before shipping the code**.
+
+## Tests and temporary files
+
+- **Default: no new tests** unless the user asks, CI requires them, or the test guards non-trivial behavior that is easy to regress.
+- **Do not** add widget/unit tests for every screen or DTO. Avoid duplicate tests that assert the same thing.
+- **One-off or scaffold tests** (spike, manual verification, default `flutter create` counter tests): **remove them** when the work is done—do not leave dead tests in `test/`.
+- **Do not** add test-only utilities or golden files unless they will stay maintained.
+
+## Unnecessary files
+
+- **Do not** commit generated scaffolds, duplicate configs, unused assets, or “example” modules.
+- **Remove** files that are superseded (old test, unused stub, wrong platform folder if product says Android-only).
+- **Do not** add root-level or random-path files when the correct home is under `docs/`, `frontend/mobile/lib/`, or `assets/` per existing layout.
+
+When unsure whether a file belongs, **delete or don’t create** rather than accumulating cruft.

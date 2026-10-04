@@ -1,0 +1,41 @@
+---
+description: Flutter/Dart structure and coding standards for frontend/mobile
+globs: frontend/mobile/**/*.dart
+alwaysApply: false
+---
+
+# Flutter mobile app
+
+Path: `frontend/mobile`. Package: `circular_salone`. Display name: **Circular Salone**. Android org: `sl.circularsalone`.
+
+## Folder layout
+
+Follow [docs/architecture/mobile-app.md](docs/architecture/mobile-app.md):
+
+- `lib/main.dart` — bootstrap only; starts `CircularSaloneApp`
+- `lib/app/` — theme, navigation, app shell
+- `lib/core/` — shared networking, storage, auth client, sync, permissions, utilities
+- `lib/features/<feature>/` — each with `presentation/`, `domain/`, `data/`
+
+**presentation** — screens/widgets only; no HTTP/DB. **domain** — use cases; no HTTP/DB/widgets. **data** — API and local storage; no widgets.
+
+Screens must not call the database or build raw HTTP; data layer does.
+
+## Dart style
+
+- Keep types; avoid `dynamic` except at untyped boundaries
+- Single quotes; honor `analysis_options.yaml` / `flutter analyze`
+- No `print` in committed code (use logging when it exists)
+- Comment non-obvious constraints (e.g. unique transaction ids for sync), not obvious code
+
+## Offline and errors
+
+Failed actions must not be reported as successful lifecycle changes. User-facing messages stay plain; technical detail in logs without secrets. Offline failures stay in the sync queue with their transaction id.
+
+## Assets
+
+Register new asset folders in `pubspec.yaml`. Brand logo: `assets/brand/circular_salone_logo.png`.
+
+## Tests
+
+Do not add tests by default. Remove obsolete or scaffold tests under `test/` when finished. CI currently runs `flutter analyze` only.
