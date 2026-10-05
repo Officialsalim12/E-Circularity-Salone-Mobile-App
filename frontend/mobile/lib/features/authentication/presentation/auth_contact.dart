@@ -10,7 +10,7 @@ String? validateEmailAddress(String? value) {
   }
   final emailPattern = RegExp(r'^[^@]+@[^@]+\.[^@]+$');
   if (!emailPattern.hasMatch(input)) {
-    return 'Enter a valid email address';
+    return "That email doesn't look right";
   }
   return null;
 }
@@ -25,7 +25,7 @@ String? validatePhoneNumber(String? value) {
   return null;
 }
 
-/// Eight-digit national number, or null when [value] is not a Sierra Leone mobile number.
+/// The 8 digits after 232, or null if it isn't a Sierra Leone mobile number.
 String? sierraLeoneNationalNumber(String? value) {
   final digits = value?.replaceAll(RegExp(r'\D'), '') ?? '';
   if (digits.isEmpty) {
@@ -47,7 +47,7 @@ String? validatePassword(String? value) {
     return 'Enter your password';
   }
   if (value.length < 8) {
-    return 'Password must be at least 8 characters';
+    return 'Use at least 8 characters';
   }
   return null;
 }

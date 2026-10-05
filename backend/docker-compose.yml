@@ -1,0 +1,15 @@
+# Local PostgreSQL only. The password is for a developer machine, not a deployed environment.
+services:
+  postgres:
+    image: postgres:16
+    environment:
+      POSTGRES_USER: circular_salone
+      POSTGRES_PASSWORD: circular_salone
+      POSTGRES_DB: circular_salone
+    ports:
+      - "5432:5432"
+    volumes:
+      - circular_salone_pg:/var/lib/postgresql/data
+
+volumes:
+  circular_salone_pg:

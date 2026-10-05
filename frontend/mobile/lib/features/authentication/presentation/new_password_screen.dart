@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 import '../../../app/app_colors.dart';
+import '../../../app/auth_scope.dart';
 import '../../../app/responsive_layout.dart';
+import '../../../core/networking/api_client.dart';
 import 'auth_contact.dart';
 import 'password_changed_screen.dart';
 import 'widgets/auth_back_button.dart';
@@ -10,13 +12,16 @@ import 'widgets/auth_form_viewport.dart';
 import 'widgets/auth_primary_button.dart';
 import 'widgets/auth_text_field.dart';
 
-/// Collects a replacement password after the reset code step.
-///
-/// The new password is not saved. Account recovery is still open.
+/// New password, after the reset code.
 class NewPasswordScreen extends StatefulWidget {
-  const NewPasswordScreen({required this.destination, super.key});
+  const NewPasswordScreen({
+    required this.destination,
+    required this.verificationToken,
+    super.key,
+  });
 
   final String destination;
+  final String verificationToken;
 
   static const String logoAsset = 'assets/brand/circular_salone_logo.png';
 
@@ -32,6 +37,7 @@ class _NewPasswordScreenState extends State<NewPasswordScreen> {
   bool _obscurePassword = true;
   bool _obscureConfirmPassword = true;
   bool _isLoading = false;
+  String? _error;
 
   @override
   void dispose() {
@@ -47,8 +53,26 @@ class _NewPasswordScreenState extends State<NewPasswordScreen> {
       return;
     }
 
-    setState(() => _isLoading = true);
-    await Future<void>.delayed(const Duration(milliseconds: 600));
+    setState(() {
+      _isLoading = true;
+      _error = null;
+    });
+
+    try {
+      await AuthScope.of(context).resetPassword(
+        verificationToken: widget.verificationToken,
+        password: _passwordController.text,
+      );
+    } on ApiException catch (error) {
+      if (!mounted) {
+        return;
+      }
+      setState(() {
+        _isLoading = false;
+        _error = error.message;
+      });
+      return;
+    }
 
     if (!mounted) {
       return;
@@ -189,6 +213,18 @@ class _NewPasswordScreenState extends State<NewPasswordScreen> {
                                   ),
                                 ),
                               ),
+                              if (_error != null) ...[
+                                const SizedBox(height: 8),
+                                Text(
+                                  _error!,
+                                  textAlign: TextAlign.center,
+                                  style: TextStyle(
+                                    color: AppColors.loginPrimary,
+                                    fontSize: metrics.linkFontSize,
+                                    height: 1.4,
+                                  ),
+                                ),
+                              ],
                               SizedBox(height: metrics.blockGap),
                               AuthPrimaryButton(
                                 label: 'Reset Password',

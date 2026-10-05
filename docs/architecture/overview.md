@@ -45,9 +45,9 @@ Use the smallest design that meets the rule. An accurate device history matters 
 | Decision | Choice |
 | --- | --- |
 | Mobile | Flutter, Android |
-| API | Versioned HTTP. Conceptual prefix `/api/v1/`. Contracts are not written |
-| Store | Relational. Product [TBD] |
-| Backend runtime | [TBD]. No scaffold until it is chosen |
+| API | Versioned HTTP. Prefix `/api/v1/`. Auth contract is in [api.md](api.md). Other contracts are not written |
+| Store | PostgreSQL |
+| Backend runtime | Node.js, TypeScript, Fastify |
 | Admin client | Capability is in scope. Technology [TBD] |
 | Map, SMS, WhatsApp, email, payments | [TBD]. See [integrations.md](integrations.md) |
 

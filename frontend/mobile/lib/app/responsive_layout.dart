@@ -121,7 +121,6 @@ class AuthFormMetrics {
     final cappedTabletForm = !phoneLayout &&
         width >= ResponsiveLayout.tabletMinWidth;
 
-    allowScroll = !phoneLayout;
     tabletCenteredForm = cappedTabletForm;
     contentScale = scale;
     heightTier = tier;
@@ -166,7 +165,6 @@ class AuthFormMetrics {
         : _scaled(8, scale, min: 4, max: 16);
   }
 
-  late final bool allowScroll;
   late final bool tabletCenteredForm;
   late final double contentScale;
   late final MobileHeightTier heightTier;
@@ -204,36 +202,36 @@ class AuthFormMetrics {
   }) {
     if (preset == AuthIllustrationPreset.signup) {
       final factor = switch (tier) {
-        MobileHeightTier.compact => 0.14,
-        MobileHeightTier.standard => 0.18,
-        MobileHeightTier.large => 0.22,
+        MobileHeightTier.compact => 0.10,
+        MobileHeightTier.standard => 0.16,
+        MobileHeightTier.large => 0.20,
       };
       final min = switch (tier) {
-        MobileHeightTier.compact => 90.0,
-        MobileHeightTier.standard => 110.0,
-        MobileHeightTier.large => 130.0,
+        MobileHeightTier.compact => 56.0,
+        MobileHeightTier.standard => 96.0,
+        MobileHeightTier.large => 120.0,
       };
       final max = switch (tier) {
-        MobileHeightTier.compact => 150.0,
-        MobileHeightTier.standard => 180.0,
-        MobileHeightTier.large => 210.0,
+        MobileHeightTier.compact => 110.0,
+        MobileHeightTier.standard => 160.0,
+        MobileHeightTier.large => 190.0,
       };
       return (height * factor).clamp(min, max);
     }
 
     final factor = switch (tier) {
-      MobileHeightTier.compact => 0.28,
-      MobileHeightTier.standard => 0.32,
+      MobileHeightTier.compact => 0.22,
+      MobileHeightTier.standard => 0.30,
       MobileHeightTier.large => 0.34,
     };
     final min = switch (tier) {
-      MobileHeightTier.compact => 150.0,
-      MobileHeightTier.standard => 180.0,
-      MobileHeightTier.large => 200.0,
+      MobileHeightTier.compact => 96.0,
+      MobileHeightTier.standard => 160.0,
+      MobileHeightTier.large => 190.0,
     };
     final max = switch (tier) {
-      MobileHeightTier.compact => 220.0,
-      MobileHeightTier.standard => 270.0,
+      MobileHeightTier.compact => 160.0,
+      MobileHeightTier.standard => 250.0,
       MobileHeightTier.large => 300.0,
     };
     final raw = (height * factor).clamp(min, max);

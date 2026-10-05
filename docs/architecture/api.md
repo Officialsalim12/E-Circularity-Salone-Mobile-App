@@ -8,7 +8,7 @@ Clients use a versioned HTTP API.
 
 A later incompatible API can ship as `/api/v2/` without breaking a client still on version 1.
 
-No endpoint list is approved. The names below come from the definition. Paths and payloads get written when the module is designed, after the open decisions for that module are closed.
+No endpoint list is approved beyond auth. The names below come from the definition. Paths and payloads for the other areas get written when that module is designed, after the open decisions for that module are closed.
 
 ```text
 /auth
@@ -36,7 +36,26 @@ Organizations, collection points, audit, and sync are required and are missing f
 
 The API is the only supported way for a client to change official data.
 
-Calls that change data or read private data require authentication. The exception is the call that creates a session or starts registration. The public registration shape is [TBD].
+## Auth
+
+These routes are the contract for the screens in the app today. Other areas in the list above are not implemented.
+
+| Method and path | What it does |
+| --- | --- |
+| `POST /api/v1/auth/register` | Creates a device owner. Does not sign them in. Needs an email or a phone, the matching verification token, and `acceptedTerms: true`. |
+| `POST /api/v1/auth/login` | Email or Sierra Leone phone, plus password. Returns tokens. An account with no password fails this the same way as a wrong password. |
+| `POST /api/v1/auth/google` | Body is `idToken`, `intent` (`sign_in` or `sign_up`), and `acceptedTerms: true` when the intent is `sign_up`. The API checks the token. A new email becomes a device owner, gets the welcome email, and gets tokens. An email that already exists signs in and is linked to that Google account if it was not linked yet. |
+| `POST /api/v1/auth/refresh` | Trades a refresh token for a new pair and retires the one you sent. |
+| `POST /api/v1/auth/logout` | Retires the refresh token you sent. |
+| `POST /api/v1/auth/verification-codes` | Sends a code for `email_registration`, `phone_registration`, or `password_reset`. Body is `purpose` and `destination`. Email goes out through Brevo email. A Sierra Leone number goes out as a Brevo text. Signing up with an address that already has an account returns a conflict. A reset for an address we don't know still returns accepted and sends nothing. |
+| `POST /api/v1/auth/verification-codes/confirm` | Checks the 6-digit code and returns a `verificationToken`. |
+| `POST /api/v1/auth/password-reset` | Sets a new password with that token and signs the account out everywhere. |
+| `GET /api/v1/auth/me` | The signed-in account. Needs `Authorization: Bearer`. |
+| `GET /api/v1/health` | The process is up. No account data. |
+
+A token response is `accessToken`, `refreshToken`, `expiresInSeconds`, and `user` (`id`, `fullName`, `email`, `phone`, `role`). A failure is `{ "error": { "code", "message" } }`. `code` is `validation_failed`, `unauthorized`, `conflict`, or `unavailable`. The message is safe to show in the app.
+
+Calls that change data or read private data require authentication. The exception is the call that creates a session or starts registration. Public registration from the mobile create-account screen creates a device owner.
 
 The server checks the caller's role and the specific record.
 

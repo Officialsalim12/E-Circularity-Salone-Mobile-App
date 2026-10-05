@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 import '../../../app/app_colors.dart';
+import '../../../app/auth_scope.dart';
 import '../../../app/responsive_layout.dart';
+import '../../../core/networking/api_client.dart';
 import 'auth_contact.dart';
 import 'reset_code_screen.dart';
 import 'widgets/auth_back_button.dart';
@@ -11,7 +13,7 @@ import 'widgets/auth_method_toggle.dart';
 import 'widgets/auth_primary_button.dart';
 import 'widgets/auth_text_field.dart';
 
-/// Collects an email or Sierra Leone number, then continues to the reset code.
+/// Asks for the email or number that should get the reset code.
 class ForgotPasswordScreen extends StatefulWidget {
   const ForgotPasswordScreen({this.initialUsePhone = false, super.key});
 
@@ -29,6 +31,7 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
   final _phoneController = TextEditingController();
 
   late bool _usePhone = widget.initialUsePhone;
+  bool _isLoading = false;
   String? _error;
 
   @override
@@ -38,7 +41,7 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
     super.dispose();
   }
 
-  void _submit() {
+  Future<void> _submit() async {
     FocusScope.of(context).unfocus();
     setState(() => _error = null);
 
@@ -52,12 +55,36 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
           )
         : _emailController.text.trim();
 
-    Navigator.of(context).push(
+    setState(() => _isLoading = true);
+    try {
+      await AuthScope.of(context).requestVerificationCode(
+        purpose: 'password_reset',
+        destination: destination,
+      );
+    } on ApiException catch (error) {
+      if (!mounted) {
+        return;
+      }
+      setState(() {
+        _isLoading = false;
+        _error = error.message;
+      });
+      return;
+    }
+
+    if (!mounted) {
+      return;
+    }
+    await Navigator.of(context).push(
       MaterialPageRoute<void>(
         builder: (_) =>
             ResetCodeScreen(destination: destination, usePhone: _usePhone),
       ),
     );
+    if (!mounted) {
+      return;
+    }
+    setState(() => _isLoading = false);
   }
 
   @override
@@ -188,6 +215,7 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                               SizedBox(height: metrics.blockGap),
                               AuthPrimaryButton(
                                 label: 'Send Reset Code',
+                                isLoading: _isLoading,
                                 height: metrics.primaryButtonHeight,
                                 fontSize: metrics.fieldFontSize + 2,
                                 onPressed: _submit,

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../../../../app/app_colors.dart';
 
-/// Full-width bottom artwork for auth screens; keeps form content separate above.
+/// Picture under the form. Hidden while the keyboard is open.
 class AuthBottomIllustration extends StatelessWidget {
   const AuthBottomIllustration({
     required this.asset,
@@ -21,6 +21,12 @@ class AuthBottomIllustration extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final keyboardOpen =
+        MediaQueryData.fromView(View.of(context)).viewInsets.bottom > 0;
+    if (keyboardOpen || maxHeight <= 0 || width <= 0) {
+      return const SizedBox.shrink();
+    }
+
     return ColoredBox(
       color: AppColors.surface,
       child: Padding(
@@ -28,14 +34,14 @@ class AuthBottomIllustration extends StatelessWidget {
           top: topGap,
           bottom: bottomInset,
         ),
-        child: ConstrainedBox(
-          constraints: BoxConstraints(maxWidth: width, maxHeight: maxHeight),
+        child: SizedBox(
+          width: width,
+          height: maxHeight,
           child: ClipRect(
-            child: Image.asset(
-              asset,
-              width: width,
+            child: FittedBox(
               fit: BoxFit.fitWidth,
               alignment: Alignment.topCenter,
+              child: Image.asset(asset),
             ),
           ),
         ),

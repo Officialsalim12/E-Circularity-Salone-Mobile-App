@@ -1,12 +1,13 @@
 # Integrations
 
-Nothing outside Circular Salone is connected. Do not create a vendor account, add an SDK, or store a credential until the decision for that vendor is written down.
+Verification codes go through Brevo, by email or by SMS. Google is used only to check a sign-in token. Do not add another vendor until that decision is written down.
 
 | Need | Status |
 | --- | --- |
-| SMS | No provider. [TBD] |
+| SMS | Brevo texts. Phone signup code, the welcome text, and a phone password reset. The sender id comes from the environment |
 | WhatsApp | No provider. [TBD] |
-| Email | No provider. [TBD] |
+| Email | Brevo email. Signup code, the welcome note, and password reset. The sender address and API key come from the environment |
+| Google sign-in | The phone uses the Google account sheet. The API checks the ID token with Google's public certificates. The web client id is `GOOGLE_CLIENT_ID`. The Android client is the package name plus the debug SHA-1 in Google Cloud. No client secret is stored |
 | USSD | No aggregator. [TBD]. Not an MVP commitment |
 | Maps and routing | No provider. Agents do need location. [TBD] |
 | Payments | No provider. [TBD]. Not an MVP feature |

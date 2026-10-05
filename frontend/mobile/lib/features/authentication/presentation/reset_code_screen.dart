@@ -4,7 +4,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 import '../../../app/app_colors.dart';
+import '../../../app/auth_scope.dart';
 import '../../../app/responsive_layout.dart';
+import '../../../core/networking/api_client.dart';
 import 'new_password_screen.dart';
 import 'widgets/auth_back_button.dart';
 import 'widgets/auth_bottom_illustration.dart';
@@ -12,9 +14,7 @@ import 'widgets/auth_code_entry.dart';
 import 'widgets/auth_form_viewport.dart';
 import 'widgets/auth_primary_button.dart';
 
-/// Code step for password recovery. Any 6 digits continue the form.
-///
-/// No code is sent or checked.
+/// Password reset code.
 class ResetCodeScreen extends StatefulWidget {
   const ResetCodeScreen({
     required this.destination,
@@ -40,6 +40,7 @@ class _ResetCodeScreenState extends State<ResetCodeScreen> {
 
   String? _error;
   int _secondsLeft = _resendSeconds;
+  bool _isLoading = false;
   Timer? _resendTimer;
 
   String get _timerLabel {
@@ -83,11 +84,14 @@ class _ResetCodeScreenState extends State<ResetCodeScreen> {
     });
   }
 
-  void _resendCode() {
+  Future<void> _resendCode() async {
+    if (_isLoading) {
+      return;
+    }
     if (_secondsLeft > 0) {
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
-          content: Text('You can request another code when the timer ends.'),
+          content: Text('Wait for the timer to finish, then ask for another code.'),
           behavior: SnackBarBehavior.floating,
         ),
       );
@@ -95,22 +99,72 @@ class _ResetCodeScreenState extends State<ResetCodeScreen> {
     }
     setState(() {
       _error = null;
+      _isLoading = true;
       _codeController.clear();
     });
+    try {
+      await AuthScope.of(context).requestVerificationCode(
+        purpose: 'password_reset',
+        destination: widget.destination,
+      );
+    } on ApiException catch (error) {
+      if (!mounted) {
+        return;
+      }
+      setState(() {
+        _isLoading = false;
+        _error = error.message;
+      });
+      return;
+    }
+    if (!mounted) {
+      return;
+    }
+    setState(() => _isLoading = false);
     _startResendCountdown();
   }
 
-  void _verify() {
+  Future<void> _verify() async {
     FocusScope.of(context).unfocus();
-    if (!RegExp(r'^\d{6}$').hasMatch(_codeController.text.trim())) {
+    final code = _codeController.text.trim();
+    if (!RegExp(r'^\d{6}$').hasMatch(code)) {
       setState(() => _error = 'Enter the 6-digit code');
       return;
     }
-    Navigator.of(context).push(
-      MaterialPageRoute<void>(
-        builder: (_) => NewPasswordScreen(destination: widget.destination),
-      ),
-    );
+
+    setState(() {
+      _error = null;
+      _isLoading = true;
+    });
+
+    try {
+      final token = await AuthScope.of(context).confirmVerificationCode(
+        purpose: 'password_reset',
+        destination: widget.destination,
+        code: code,
+      );
+      if (!mounted) {
+        return;
+      }
+      await Navigator.of(context).push(
+        MaterialPageRoute<void>(
+          builder: (_) => NewPasswordScreen(
+            destination: widget.destination,
+            verificationToken: token,
+          ),
+        ),
+      );
+    } on ApiException catch (error) {
+      if (!mounted) {
+        return;
+      }
+      setState(() => _error = error.message);
+    }
+
+    if (!mounted) {
+      return;
+    }
+    setState(() => _isLoading = false);
   }
 
   @override
@@ -203,6 +257,7 @@ class _ResetCodeScreenState extends State<ResetCodeScreen> {
                             SizedBox(height: metrics.blockGap),
                             AuthPrimaryButton(
                               label: 'Verify',
+                              isLoading: _isLoading,
                               height: metrics.primaryButtonHeight,
                               fontSize: metrics.fieldFontSize + 2,
                               onPressed: _verify,

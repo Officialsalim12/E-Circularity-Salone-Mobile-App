@@ -3,8 +3,10 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
+import '../../../app/auth_scope.dart';
 import '../../../app/responsive_layout.dart';
 import '../../onboarding/presentation/onboarding_screen_one.dart';
+import 'signed_in_screen.dart';
 import 'widgets/splash_loading_section.dart';
 
 class SplashScreen extends StatelessWidget {
@@ -60,28 +62,54 @@ class SplashScreen extends StatelessWidget {
                   ),
                   const ColoredBox(color: overlayColor),
                   SafeArea(
-                    child: Padding(
-                      padding:
-                          EdgeInsets.symmetric(horizontal: horizontalPadding),
-                      child: Column(
-                        children: [
-                          Spacer(flex: compactHeight ? 22 : 28),
-                          _LogoSection(
-                            maxWidth: contentWidth * (0.96 + (scale - 1) * 0.06),
+                    child: LayoutBuilder(
+                      builder: (context, safeConstraints) {
+                        return SingleChildScrollView(
+                          child: ConstrainedBox(
+                            constraints: BoxConstraints(
+                              minHeight: safeConstraints.maxHeight,
+                            ),
+                            child: Padding(
+                              padding: EdgeInsets.symmetric(
+                                horizontal: horizontalPadding,
+                              ),
+                              child: Column(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  SizedBox(height: compactHeight ? 12 : 20),
+                                  Column(
+                                    children: [
+                                      _LogoSection(
+                                        maxWidth: contentWidth *
+                                            (0.96 + (scale - 1) * 0.06),
+                                      ),
+                                      SizedBox(height: compactHeight ? 18 : 24),
+                                      _Tagline(
+                                        fontSize:
+                                            (17 * scale).clamp(14, 19).toDouble(),
+                                      ),
+                                    ],
+                                  ),
+                                  Column(
+                                    children: [
+                                      SplashLoadingSection(
+                                        barWidth: progressWidth,
+                                        duration: loadDuration,
+                                        onComplete: () => _openNext(context),
+                                      ),
+                                      SizedBox(
+                                        height: (compactHeight ? 20 : 28) +
+                                            bottomInset,
+                                      ),
+                                    ],
+                                  ),
+                                ],
+                              ),
+                            ),
                           ),
-                          SizedBox(height: compactHeight ? 18 : 24),
-                          _Tagline(
-                            fontSize: (17 * scale).clamp(14, 19),
-                          ),
-                          Spacer(flex: compactHeight ? 36 : 42),
-                          SplashLoadingSection(
-                            barWidth: progressWidth,
-                            duration: loadDuration,
-                            onComplete: () => _openOnboarding(context),
-                          ),
-                          SizedBox(height: (compactHeight ? 20 : 28) + bottomInset),
-                        ],
-                      ),
+                        );
+                      },
                     ),
                   ),
                 ],
@@ -93,11 +121,20 @@ class SplashScreen extends StatelessWidget {
     );
   }
 
-  void _openOnboarding(BuildContext context) {
-    unawaited(
-      Navigator.of(context).pushReplacement(
-        MaterialPageRoute<void>(builder: (_) => const OnboardingScreenOne()),
-      ),
+  void _openNext(BuildContext context) {
+    unawaited(_openNextAsync(context));
+  }
+
+  Future<void> _openNextAsync(BuildContext context) async {
+    final account = await AuthScope.of(context).restoreSession();
+    if (!context.mounted) {
+      return;
+    }
+    final Widget next = account == null
+        ? const OnboardingScreenOne()
+        : const SignedInScreen();
+    Navigator.of(context).pushReplacement(
+      MaterialPageRoute<void>(builder: (_) => next),
     );
   }
 }

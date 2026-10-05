@@ -6,6 +6,10 @@ Thumbs.db
 .env.*
 !.env.example
 
+# Backend build output
+node_modules/
+backend/dist/
+
 # Editor and OS
 .idea/
 *.iml

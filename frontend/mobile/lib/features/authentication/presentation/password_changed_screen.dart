@@ -6,7 +6,7 @@ import '../../../app/responsive_layout.dart';
 import 'widgets/auth_form_viewport.dart';
 import 'widgets/auth_primary_button.dart';
 
-/// Shown after the new-password form. The password is not saved.
+/// Shown once the new password is saved.
 class PasswordChangedScreen extends StatelessWidget {
   const PasswordChangedScreen({super.key});
 
@@ -60,7 +60,7 @@ class PasswordChangedScreen extends StatelessWidget {
                         const Center(child: _SuccessMark()),
                         SizedBox(height: metrics.blockGap),
                         Text(
-                          'Password Changed',
+                          'Password changed',
                           textAlign: TextAlign.center,
                           style: TextStyle(
                             color: AppColors.loginNavy,
@@ -72,7 +72,7 @@ class PasswordChangedScreen extends StatelessWidget {
                         ),
                         const SizedBox(height: 8),
                         Text(
-                          'Your password has been changed successfully. You can now sign in with your new password.',
+                          'Your password is updated. Sign in with the new one.',
                           textAlign: TextAlign.center,
                           style: TextStyle(
                             color: AppColors.bodyMuted,

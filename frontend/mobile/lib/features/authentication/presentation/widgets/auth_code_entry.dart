@@ -105,8 +105,10 @@ class AuthOtpCodeField extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final code = controller.text;
+    final boxHeight =
+        (MediaQuery.sizeOf(context).height * 0.07).clamp(44.0, 56.0).toDouble();
     return SizedBox(
-      height: 56,
+      height: boxHeight,
       child: Stack(
         children: [
           Row(
@@ -195,9 +197,18 @@ class PhoneVerifyArt extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final artHeight = (MediaQuery.sizeOf(context).height * 0.16)
+        .clamp(96.0, 148.0)
+        .toDouble();
     return SizedBox(
-      height: 148,
-      child: Stack(
+      height: artHeight,
+      width: double.infinity,
+      child: FittedBox(
+        fit: BoxFit.contain,
+        child: SizedBox(
+          width: 280,
+          height: 148,
+          child: Stack(
         alignment: Alignment.center,
         children: [
           const DecoratedBox(
@@ -220,6 +231,8 @@ class PhoneVerifyArt extends StatelessWidget {
           const _PhoneGlyph(),
           Positioned(right: 28, top: 18, child: _CodeBubble(label: codeLabel)),
         ],
+          ),
+        ),
       ),
     );
   }

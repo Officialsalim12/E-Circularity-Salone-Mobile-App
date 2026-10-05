@@ -2,16 +2,18 @@ import 'package:flutter/material.dart';
 
 import '../../../../app/app_colors.dart';
 
-/// UI-only control until Google sign-in is wired in [core/authentication].
+/// Continue with Google. The screen decides when it can be tapped.
 class GoogleSignInButton extends StatelessWidget {
   const GoogleSignInButton({
     required this.onPressed,
+    this.isLoading = false,
     this.height = 56,
     this.fontSize = 15,
     super.key,
   });
 
   final VoidCallback? onPressed;
+  final bool isLoading;
   final double height;
   final double fontSize;
 
@@ -24,7 +26,7 @@ class GoogleSignInButton extends StatelessWidget {
       width: double.infinity,
       height: height,
       child: OutlinedButton(
-        onPressed: onPressed,
+        onPressed: isLoading ? null : onPressed,
         style: OutlinedButton.styleFrom(
           backgroundColor: AppColors.surface,
           foregroundColor: AppColors.loginNavy,
@@ -33,21 +35,30 @@ class GoogleSignInButton extends StatelessWidget {
             borderRadius: BorderRadius.circular(radius),
           ),
         ),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            const _GoogleMark(),
-            const SizedBox(width: 12),
-            Text(
-              'Continue with Google',
-              style: TextStyle(
-                fontSize: fontSize,
-                fontWeight: FontWeight.w600,
-                color: AppColors.loginNavy,
+        child: isLoading
+            ? const SizedBox(
+                width: 24,
+                height: 24,
+                child: CircularProgressIndicator(
+                  strokeWidth: 2.5,
+                  color: AppColors.loginNavy,
+                ),
+              )
+            : Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  const _GoogleMark(),
+                  const SizedBox(width: 12),
+                  Text(
+                    'Continue with Google',
+                    style: TextStyle(
+                      fontSize: fontSize,
+                      fontWeight: FontWeight.w600,
+                      color: AppColors.loginNavy,
+                    ),
+                  ),
+                ],
               ),
-            ),
-          ],
-        ),
       ),
     );
   }

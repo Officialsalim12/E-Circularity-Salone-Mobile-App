@@ -2,10 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 import '../../../app/app_colors.dart';
+import '../../../app/auth_scope.dart';
 import '../../../app/responsive_layout.dart';
+import '../../../core/networking/api_client.dart';
 import 'auth_contact.dart';
 import 'create_account_screen.dart';
 import 'forgot_password_screen.dart';
+import 'signed_in_screen.dart';
 import 'widgets/auth_bottom_illustration.dart';
 import 'widgets/auth_form_viewport.dart';
 import 'widgets/auth_method_toggle.dart';
@@ -14,7 +17,9 @@ import 'widgets/auth_text_field.dart';
 import 'widgets/google_sign_in_button.dart';
 
 class SignInScreen extends StatefulWidget {
-  const SignInScreen({super.key});
+  const SignInScreen({this.accountCreated = false, super.key});
+
+  final bool accountCreated;
 
   static const String logoAsset = 'assets/brand/circular_salone_logo.png';
   static const String illustrationAsset =
@@ -33,6 +38,7 @@ class _SignInScreenState extends State<SignInScreen> {
   bool _usePhone = false;
   bool _obscurePassword = true;
   bool _isLoading = false;
+  bool _isGoogleLoading = false;
   String? _authError;
 
   @override
@@ -53,25 +59,69 @@ class _SignInScreenState extends State<SignInScreen> {
 
     setState(() => _isLoading = true);
 
-    await Future<void>.delayed(const Duration(milliseconds: 600));
+    try {
+      final auth = AuthScope.of(context);
+      if (_usePhone) {
+        await auth.login(
+          phone: sierraLeoneNationalNumber(_phoneController.text),
+          password: _passwordController.text,
+        );
+      } else {
+        await auth.login(
+          email: _emailController.text.trim(),
+          password: _passwordController.text,
+        );
+      }
+    } on ApiException catch (error) {
+      if (!mounted) {
+        return;
+      }
+      setState(() {
+        _isLoading = false;
+        _authError = error.message;
+      });
+      return;
+    }
 
     if (!mounted) {
       return;
     }
-
-    setState(() {
-      _isLoading = false;
-      _authError = 'Sign-in is not connected yet. Authentication will be enabled when the server is ready.';
-    });
+    openSignedIn(context);
   }
 
-  void _showGoogleUnavailable() {
-    ScaffoldMessenger.of(context).showSnackBar(
-      const SnackBar(
-        content: Text('Google sign-in is not configured yet.'),
-        behavior: SnackBarBehavior.floating,
-      ),
-    );
+  Future<void> _continueWithGoogle() async {
+    FocusScope.of(context).unfocus();
+    setState(() {
+      _authError = null;
+      _isGoogleLoading = true;
+    });
+
+    try {
+      final account = await AuthScope.of(context).continueWithGoogle(
+        intent: 'sign_in',
+      );
+      if (!mounted) {
+        return;
+      }
+      if (account == null) {
+        setState(() => _isGoogleLoading = false);
+        return;
+      }
+    } on ApiException catch (error) {
+      if (!mounted) {
+        return;
+      }
+      setState(() {
+        _isGoogleLoading = false;
+        _authError = error.message;
+      });
+      return;
+    }
+
+    if (!mounted) {
+      return;
+    }
+    openSignedIn(context);
   }
 
   @override
@@ -127,7 +177,9 @@ class _SignInScreenState extends State<SignInScreen> {
                               ),
                               const SizedBox(height: 6),
                               Text(
-                                'Sign in to continue',
+                                widget.accountCreated
+                                    ? "You're all set. Sign in when you're ready."
+                                    : 'Sign in to continue',
                                 textAlign: TextAlign.center,
                                 style: TextStyle(
                                   color: AppColors.bodyMuted,
@@ -252,13 +304,14 @@ class _SignInScreenState extends State<SignInScreen> {
                                 isLoading: _isLoading,
                                 height: metrics.primaryButtonHeight,
                                 fontSize: metrics.fieldFontSize + 2,
-                                onPressed: _submitSignIn,
+                                onPressed: _isGoogleLoading ? null : _submitSignIn,
                               ),
                               SizedBox(height: metrics.blockGap),
                               const _OrDivider(),
                               SizedBox(height: metrics.blockGap),
                               GoogleSignInButton(
-                                onPressed: _showGoogleUnavailable,
+                                isLoading: _isGoogleLoading,
+                                onPressed: _isLoading ? null : _continueWithGoogle,
                                 height: metrics.primaryButtonHeight,
                                 fontSize: metrics.fieldFontSize,
                               ),

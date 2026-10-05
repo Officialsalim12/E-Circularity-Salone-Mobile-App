@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 
 import '../../../../app/app_colors.dart';
 
-/// Email or phone choice on the sign-in, create-account, and forgot-password forms.
+/// Switches the form between email and phone.
 class AuthMethodToggle extends StatelessWidget {
   const AuthMethodToggle({
     required this.usePhone,
@@ -122,7 +122,7 @@ class _AuthMethodSegment extends StatelessWidget {
               onTap: selected ? null : onTap,
               borderRadius: BorderRadius.circular(10),
               child: SizedBox(
-                height: 40,
+                height: (fontSize + 24).clamp(36, 48).toDouble(),
                 child: Center(
                   child: Text(
                     label,

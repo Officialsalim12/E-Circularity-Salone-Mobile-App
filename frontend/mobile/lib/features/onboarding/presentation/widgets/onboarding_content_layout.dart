@@ -58,68 +58,97 @@ class OnboardingContentLayout extends StatelessWidget {
                   ),
                   Expanded(
                     flex: metrics.textBlockFlex,
-                    child: Column(
-                      children: [
-                        Text(
-                          heading,
-                          textAlign: TextAlign.center,
-                          style: TextStyle(
-                            color: AppColors.headingNavy,
-                            fontSize: metrics.headingFontSize,
-                            height: 1.12,
-                            fontWeight: FontWeight.w700,
-                            letterSpacing: -0.4,
-                          ),
-                        ),
-                        SizedBox(height: metrics.compactHeight ? 12.0 : 16.0),
-                        ConstrainedBox(
-                          constraints: BoxConstraints(
-                            maxWidth: metrics.contentMaxWidth.clamp(280, 360),
-                          ),
-                          child: Text(
-                            description,
-                            textAlign: TextAlign.center,
-                            style: TextStyle(
-                              color: AppColors.bodyMuted,
-                              fontSize: metrics.descriptionFontSize,
-                              height: 1.5,
-                              fontWeight: FontWeight.w400,
-                              letterSpacing: 0.1,
-                            ),
-                          ),
-                        ),
-                        const Spacer(),
-                        Center(
+                    child: LayoutBuilder(
+                      builder: (context, textConstraints) {
+                        return SingleChildScrollView(
                           child: ConstrainedBox(
                             constraints: BoxConstraints(
-                              maxWidth: metrics.contentMaxWidth,
+                              minHeight: textConstraints.maxHeight,
                             ),
                             child: Column(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
-                                OnboardingProgressDots(
-                                  pageCount: 3,
-                                  activeIndex: activeIndex,
+                                Column(
+                                  children: [
+                                    Text(
+                                      heading,
+                                      textAlign: TextAlign.center,
+                                      style: TextStyle(
+                                        color: AppColors.headingNavy,
+                                        fontSize: metrics.headingFontSize,
+                                        height: 1.12,
+                                        fontWeight: FontWeight.w700,
+                                        letterSpacing: -0.4,
+                                      ),
+                                    ),
+                                    SizedBox(
+                                      height: metrics.compactHeight ? 12.0 : 16.0,
+                                    ),
+                                    ConstrainedBox(
+                                      constraints: BoxConstraints(
+                                        maxWidth: metrics.contentMaxWidth,
+                                      ),
+                                      child: Text(
+                                        description,
+                                        textAlign: TextAlign.center,
+                                        style: TextStyle(
+                                          color: AppColors.bodyMuted,
+                                          fontSize: metrics.descriptionFontSize,
+                                          height: 1.5,
+                                          fontWeight: FontWeight.w400,
+                                          letterSpacing: 0.1,
+                                        ),
+                                      ),
+                                    ),
+                                  ],
                                 ),
-                                SizedBox(height: metrics.progressDotsGap),
-                                OnboardingNextButton(
-                                  onPressed: onNext,
-                                  label: primaryButtonLabel,
-                                  height: metrics.primaryButtonHeight,
-                                  fontSize: metrics.descriptionFontSize + 1,
+                                Column(
+                                  children: [
+                                    Center(
+                                      child: ConstrainedBox(
+                                        constraints: BoxConstraints(
+                                          maxWidth: metrics.contentMaxWidth,
+                                        ),
+                                        child: Column(
+                                          children: [
+                                            OnboardingProgressDots(
+                                              pageCount: 3,
+                                              activeIndex: activeIndex,
+                                            ),
+                                            SizedBox(
+                                              height: metrics.progressDotsGap,
+                                            ),
+                                            OnboardingNextButton(
+                                              onPressed: onNext,
+                                              label: primaryButtonLabel,
+                                              height: metrics.primaryButtonHeight,
+                                              fontSize:
+                                                  metrics.descriptionFontSize + 1,
+                                            ),
+                                            if (onSkip != null) ...[
+                                              const SizedBox(height: 4),
+                                              OnboardingSkipButton(
+                                                onPressed: onSkip!,
+                                                fontSize:
+                                                    metrics.descriptionFontSize + 1,
+                                              ),
+                                            ],
+                                          ],
+                                        ),
+                                      ),
+                                    ),
+                                    SizedBox(
+                                      height: MediaQuery.paddingOf(context)
+                                              .bottom +
+                                          metrics.bottomPadding,
+                                    ),
+                                  ],
                                 ),
-                                if (onSkip != null) ...[
-                                  const SizedBox(height: 4),
-                                  OnboardingSkipButton(onPressed: onSkip!),
-                                ],
                               ],
                             ),
                           ),
-                        ),
-                        SizedBox(
-                          height: MediaQuery.paddingOf(context).bottom +
-                              metrics.bottomPadding,
-                        ),
-                      ],
+                        );
+                      },
                     ),
                   ),
                 ],

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../../../../app/app_colors.dart';
 
-/// Back control fixed at the top of the screen, outside the scaled form.
+/// Back button, kept above the scrolling form.
 class AuthBackButton extends StatelessWidget {
   const AuthBackButton({
     required this.onPressed,

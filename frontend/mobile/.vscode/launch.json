@@ -6,14 +6,19 @@
       "request": "launch",
       "type": "dart",
       "program": "lib/main.dart",
-      "args": ["-d", "android"]
+      "args": ["-d", "android"],
+      "toolArgs": [
+        "--dart-define=API_BASE_URL=http://10.0.2.2:3000",
+        "--dart-define=GOOGLE_CLIENT_ID=421095308892-4po6tc8s25h1df853m72kkv8ihvtg7db.apps.googleusercontent.com"
+      ]
     },
     {
       "name": "Circular Salone (iOS Simulator)",
       "request": "launch",
       "type": "dart",
       "program": "lib/main.dart",
-      "args": ["-d", "ios"]
+      "args": ["-d", "ios"],
+      "toolArgs": ["--dart-define=API_BASE_URL=http://127.0.0.1:3000"]
     },
     {
       "name": "Circular Salone (iPhone — This PC's iPhone)",
@@ -34,7 +39,8 @@
         "--web-browser-flag=--enable-webgl",
         "--web-browser-flag=--enable-webgl2",
         "--web-browser-flag=--ignore-gpu-blocklist"
-      ]
+      ],
+      "toolArgs": ["--dart-define=API_BASE_URL=http://127.0.0.1:3000"]
     }
   ]
 }

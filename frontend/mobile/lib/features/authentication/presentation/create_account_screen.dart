@@ -2,9 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 import '../../../app/app_colors.dart';
+import '../../../app/auth_scope.dart';
 import '../../../app/responsive_layout.dart';
+import '../../../core/networking/api_client.dart';
 import 'auth_contact.dart';
+import 'confirm_account_screen.dart';
 import 'sign_in_screen.dart';
+import 'signed_in_screen.dart';
 import 'verify_phone_number_screen.dart';
 import 'widgets/auth_back_button.dart';
 import 'widgets/auth_bottom_illustration.dart';
@@ -35,10 +39,12 @@ class _CreateAccountScreenState extends State<CreateAccountScreen> {
 
   bool _usePhone = false;
   String? _confirmedPhone;
+  String? _verificationToken;
   bool _obscurePassword = true;
   bool _obscureConfirmPassword = true;
   bool _agreedToTerms = false;
   bool _isLoading = false;
+  bool _isGoogleLoading = false;
   String? _authError;
 
   @override
@@ -56,8 +62,13 @@ class _CreateAccountScreenState extends State<CreateAccountScreen> {
 
     if (!_agreedToTerms) {
       setState(() {
-        _authError = 'Please accept the Terms and Conditions and Privacy Policy.';
+        _authError = 'Accept the terms and privacy policy to continue.';
       });
+      return;
+    }
+
+    if (_usePhone && (_confirmedPhone == null || _verificationToken == null)) {
+      setState(() => _authError = 'Check your phone number first.');
       return;
     }
 
@@ -67,40 +78,120 @@ class _CreateAccountScreenState extends State<CreateAccountScreen> {
 
     setState(() => _isLoading = true);
 
-    await Future<void>.delayed(const Duration(milliseconds: 600));
+    try {
+      final auth = AuthScope.of(context);
+      if (_usePhone) {
+        await auth.register(
+          fullName: _fullNameController.text.trim(),
+          password: _passwordController.text,
+          phone: _confirmedPhone,
+          verificationToken: _verificationToken,
+        );
+      } else {
+        final email = _emailController.text.trim();
+        await auth.requestVerificationCode(
+          purpose: 'email_registration',
+          destination: email,
+        );
+        if (!mounted) {
+          return;
+        }
+        final token = await Navigator.of(context).push<String>(
+          MaterialPageRoute(
+            builder: (_) => ConfirmAccountScreen(email: email),
+          ),
+        );
+        if (!mounted) {
+          return;
+        }
+        if (token == null) {
+          setState(() => _isLoading = false);
+          return;
+        }
+        await auth.register(
+          fullName: _fullNameController.text.trim(),
+          password: _passwordController.text,
+          email: email,
+          verificationToken: token,
+        );
+      }
+    } on ApiException catch (error) {
+      if (!mounted) {
+        return;
+      }
+      setState(() {
+        _isLoading = false;
+        _authError = error.message;
+      });
+      return;
+    }
 
     if (!mounted) {
       return;
     }
-
-    setState(() {
-      _isLoading = false;
-      _authError =
-          'Registration is not connected yet. Account creation will be enabled when the server is ready.';
-    });
-  }
-
-  void _showGoogleUnavailable() {
-    ScaffoldMessenger.of(context).showSnackBar(
-      const SnackBar(
-        content: Text('Google sign-up is not configured yet.'),
-        behavior: SnackBarBehavior.floating,
+    Navigator.of(context).pushAndRemoveUntil(
+      MaterialPageRoute<void>(
+        builder: (_) => const SignInScreen(accountCreated: true),
       ),
+      (_) => false,
     );
   }
 
+  Future<void> _continueWithGoogle() async {
+    FocusScope.of(context).unfocus();
+    setState(() => _authError = null);
+
+    if (!_agreedToTerms) {
+      setState(() {
+        _authError = 'Accept the terms and privacy policy to continue.';
+      });
+      return;
+    }
+
+    setState(() => _isGoogleLoading = true);
+
+    try {
+      final account = await AuthScope.of(context).continueWithGoogle(
+        intent: 'sign_up',
+        acceptedTerms: true,
+      );
+      if (!mounted) {
+        return;
+      }
+      if (account == null) {
+        setState(() => _isGoogleLoading = false);
+        return;
+      }
+    } on ApiException catch (error) {
+      if (!mounted) {
+        return;
+      }
+      setState(() {
+        _isGoogleLoading = false;
+        _authError = error.message;
+      });
+      return;
+    }
+
+    if (!mounted) {
+      return;
+    }
+    openSignedIn(context);
+  }
+
   Future<void> _openPhoneVerification() async {
-    final number = await Navigator.of(context).push<String>(
+    final verified = await Navigator.of(context).push<VerifiedPhone>(
       MaterialPageRoute(
         builder: (_) => const VerifyPhoneNumberScreen(),
       ),
     );
-    if (!mounted || number == null) {
+    if (!mounted || verified == null) {
       return;
     }
     setState(() {
       _usePhone = true;
-      _confirmedPhone = number;
+      _confirmedPhone = verified.nationalNumber;
+      _verificationToken = verified.verificationToken;
       _authError = null;
     });
   }
@@ -192,6 +283,7 @@ class _CreateAccountScreenState extends State<CreateAccountScreen> {
                                         setState(() {
                                           _usePhone = false;
                                           _confirmedPhone = null;
+                                          _verificationToken = null;
                                           _authError = null;
                                         });
                                         return;
@@ -339,6 +431,17 @@ class _CreateAccountScreenState extends State<CreateAccountScreen> {
                                       });
                                     },
                                   ),
+                                  if (!_agreedToTerms) ...[
+                                    const SizedBox(height: 4),
+                                    Text(
+                                      'Tick this box before you create an account.',
+                                      style: TextStyle(
+                                        color: AppColors.bodyMuted,
+                                        fontSize: metrics.linkFontSize - 1,
+                                        height: 1.4,
+                                      ),
+                                    ),
+                                  ],
                                   if (_authError != null) ...[
                                     SizedBox(height: metrics.fieldGap * 0.5),
                                     Text(
@@ -356,13 +459,18 @@ class _CreateAccountScreenState extends State<CreateAccountScreen> {
                                     isLoading: _isLoading,
                                     height: metrics.primaryButtonHeight,
                                     fontSize: metrics.fieldFontSize + 2,
-                                    onPressed: _submitSignup,
+                                    onPressed: _agreedToTerms && !_isGoogleLoading
+                                        ? _submitSignup
+                                        : null,
                                   ),
                                   SizedBox(height: metrics.blockGap),
                                   const AuthOrDivider(),
                                   SizedBox(height: metrics.blockGap),
                                   GoogleSignInButton(
-                                    onPressed: _showGoogleUnavailable,
+                                    isLoading: _isGoogleLoading,
+                                    onPressed: _agreedToTerms && !_isLoading
+                                        ? _continueWithGoogle
+                                        : null,
                                     height: metrics.primaryButtonHeight,
                                     fontSize: metrics.fieldFontSize,
                                   ),
@@ -436,19 +544,22 @@ class _TermsCheckbox extends StatelessWidget {
           child: Wrap(
             crossAxisAlignment: WrapCrossAlignment.center,
             children: [
-              Text(
-                'I agree to the ',
-                style: TextStyle(
-                  color: AppColors.bodyMuted,
-                  fontSize: fontSize,
-                  height: 1.4,
+              GestureDetector(
+                onTap: () => onChanged(!value),
+                child: Text(
+                  'I agree to the ',
+                  style: TextStyle(
+                    color: AppColors.bodyMuted,
+                    fontSize: fontSize,
+                    height: 1.4,
+                  ),
                 ),
               ),
               GestureDetector(
                 onTap: () {
                   ScaffoldMessenger.of(context).showSnackBar(
                     const SnackBar(
-                      content: Text('Terms and Conditions — coming soon.'),
+                      content: Text("Terms and Conditions aren't ready yet."),
                       behavior: SnackBarBehavior.floating,
                     ),
                   );
@@ -475,7 +586,7 @@ class _TermsCheckbox extends StatelessWidget {
                 onTap: () {
                   ScaffoldMessenger.of(context).showSnackBar(
                     const SnackBar(
-                      content: Text('Privacy Policy — coming soon.'),
+                      content: Text("Privacy Policy isn't ready yet."),
                       behavior: SnackBarBehavior.floating,
                     ),
                   );

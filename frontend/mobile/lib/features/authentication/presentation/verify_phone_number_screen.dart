@@ -4,7 +4,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 import '../../../app/app_colors.dart';
+import '../../../app/auth_scope.dart';
 import '../../../app/responsive_layout.dart';
+import '../../../core/networking/api_client.dart';
 import 'auth_contact.dart';
 import 'widgets/auth_back_button.dart';
 import 'widgets/auth_bottom_illustration.dart';
@@ -12,10 +14,17 @@ import 'widgets/auth_code_entry.dart';
 import 'widgets/auth_form_viewport.dart';
 import 'widgets/auth_primary_button.dart';
 
-/// Collects a Sierra Leone number before create-account asks for a name and password.
-///
-/// Pops the eight-digit national number when the user confirms it.
-/// No code is sent; the SMS provider is still open.
+class VerifiedPhone {
+  const VerifiedPhone({
+    required this.nationalNumber,
+    required this.verificationToken,
+  });
+
+  final String nationalNumber;
+  final String verificationToken;
+}
+
+/// Phone signup. Pops [VerifiedPhone] once the code checks out.
 class VerifyPhoneNumberScreen extends StatefulWidget {
   const VerifyPhoneNumberScreen({super.key});
 
@@ -37,6 +46,7 @@ class _VerifyPhoneNumberScreenState extends State<VerifyPhoneNumberScreen> {
   String? _nationalNumber;
   String? _error;
   int _secondsLeft = 0;
+  bool _isLoading = false;
   Timer? _resendTimer;
 
   bool get _enteringCode => _nationalNumber != null;
@@ -56,29 +66,89 @@ class _VerifyPhoneNumberScreenState extends State<VerifyPhoneNumberScreen> {
     super.dispose();
   }
 
-  void _sendCode() {
+  Future<void> _sendCode() async {
     FocusScope.of(context).unfocus();
     final error = validatePhoneNumber(_phoneController.text);
     if (error != null) {
       setState(() => _error = error);
       return;
     }
+    final nationalNumber = sierraLeoneNationalNumber(_phoneController.text);
+    if (nationalNumber == null) {
+      setState(() => _error = 'Enter an 8-digit Sierra Leone number');
+      return;
+    }
+
     setState(() {
       _error = null;
-      _nationalNumber = sierraLeoneNationalNumber(_phoneController.text);
+      _isLoading = true;
+    });
+
+    try {
+      await AuthScope.of(context).requestVerificationCode(
+        purpose: 'phone_registration',
+        destination: nationalNumber,
+      );
+    } on ApiException catch (error) {
+      if (!mounted) {
+        return;
+      }
+      setState(() {
+        _isLoading = false;
+        _error = error.message;
+      });
+      return;
+    }
+
+    if (!mounted) {
+      return;
+    }
+    setState(() {
+      _isLoading = false;
+      _nationalNumber = nationalNumber;
       _codeController.clear();
     });
     _startResendCountdown();
   }
 
-  void _confirmCode() {
+  Future<void> _confirmCode() async {
     FocusScope.of(context).unfocus();
+    final nationalNumber = _nationalNumber;
     final code = _codeController.text.trim();
+    if (nationalNumber == null) {
+      return;
+    }
     if (!RegExp(r'^\d{6}$').hasMatch(code)) {
       setState(() => _error = 'Enter the 6-digit code');
       return;
     }
-    Navigator.of(context).pop(_nationalNumber);
+
+    setState(() {
+      _error = null;
+      _isLoading = true;
+    });
+
+    try {
+      final token = await AuthScope.of(context).confirmVerificationCode(
+        purpose: 'phone_registration',
+        destination: nationalNumber,
+        code: code,
+      );
+      if (!mounted) {
+        return;
+      }
+      Navigator.of(context).pop(
+        VerifiedPhone(nationalNumber: nationalNumber, verificationToken: token),
+      );
+    } on ApiException catch (error) {
+      if (!mounted) {
+        return;
+      }
+      setState(() {
+        _isLoading = false;
+        _error = error.message;
+      });
+    }
   }
 
   void _startResendCountdown() {
@@ -98,20 +168,50 @@ class _VerifyPhoneNumberScreenState extends State<VerifyPhoneNumberScreen> {
     });
   }
 
-  void _resendCode() {
+  Future<void> _resendCode() async {
+    if (_isLoading) {
+      return;
+    }
     if (_secondsLeft > 0) {
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
-          content: Text('You can request another code when the timer ends.'),
+          content: Text('Wait for the timer to finish, then ask for another code.'),
           behavior: SnackBarBehavior.floating,
         ),
       );
       return;
     }
+    final nationalNumber = _nationalNumber;
+    if (nationalNumber == null) {
+      return;
+    }
+
     setState(() {
       _error = null;
+      _isLoading = true;
       _codeController.clear();
     });
+
+    try {
+      await AuthScope.of(context).requestVerificationCode(
+        purpose: 'phone_registration',
+        destination: nationalNumber,
+      );
+    } on ApiException catch (error) {
+      if (!mounted) {
+        return;
+      }
+      setState(() {
+        _isLoading = false;
+        _error = error.message;
+      });
+      return;
+    }
+
+    if (!mounted) {
+      return;
+    }
+    setState(() => _isLoading = false);
     _startResendCountdown();
   }
 
@@ -250,11 +350,10 @@ class _VerifyPhoneNumberScreenState extends State<VerifyPhoneNumberScreen> {
                             SizedBox(height: metrics.blockGap),
                             AuthPrimaryButton(
                               label: _enteringCode ? 'Verify' : 'Send Code',
+                              isLoading: _isLoading,
                               height: metrics.primaryButtonHeight,
                               fontSize: metrics.fieldFontSize + 2,
-                              onPressed: _enteringCode
-                                  ? _confirmCode
-                                  : _sendCode,
+                              onPressed: _enteringCode ? _confirmCode : _sendCode,
                             ),
                             if (!_enteringCode) ...[
                               SizedBox(height: metrics.footerGap),
@@ -458,7 +557,7 @@ class _AgreementText extends StatelessWidget {
   void _showComingSoon(BuildContext context, String title) {
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
-        content: Text('$title — coming soon.'),
+        content: Text("$title isn't ready yet."),
         behavior: SnackBarBehavior.floating,
       ),
     );

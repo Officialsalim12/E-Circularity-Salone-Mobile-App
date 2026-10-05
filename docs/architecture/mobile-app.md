@@ -1,6 +1,6 @@
 # Mobile app
 
-Flutter app in `frontend/mobile`. **Android** is the pilot target; **iOS** is enabled for development and device testing (same UI). On launch it shows a branded splash screen, then onboarding. It does not sign anyone in, store a device, or call an API.
+Flutter app in `frontend/mobile`. **Android** is the pilot target; **iOS** is enabled for development and device testing (same UI). On launch it shows a branded splash screen, then onboarding, unless a refresh token is already stored. A stored session opens the signed-in screen. Auth calls the API. The app does not store a device.
 
 The app draws the screens, captures field input, shows assignments that are already on the phone, keeps a local queue, and calls the API when a connection exists.
 
@@ -43,11 +43,13 @@ Each feature has three layers:
 
 `presentation` does not hold official business rules. `domain` does not call HTTP or the database. `data` does not build widgets.
 
-`core/authentication` is for session or token storage and the authenticated client, when those exist. `features/authentication/presentation` holds the launch splash (`SplashScreen`), login UI (`SignInScreen`), signup UI (`CreateAccountScreen`), and password recovery (`ForgotPasswordScreen`). Both sign-in and create account let the user choose an email address or a Sierra Leone phone number, then a password. Forgot password collects that same email or phone number, then opens `ResetCodeScreen`, `NewPasswordScreen`, and `PasswordChangedScreen`. No code is sent or checked, and the new password is not saved; account recovery is still [TBD]. Choosing phone on create account opens `VerifyPhoneNumberScreen` first. Name and password are collected only after that number is confirmed. The code step shows six boxes and a local resend countdown. No code is sent or checked; the SMS provider is still open. Session logic and API auth are not built.
+`core/authentication` stores the access token and refresh token in `flutter_secure_storage` (Android Keystore, iOS Keychain). `core/networking` is the HTTP client. `features/authentication/data` calls the auth API. `features/authentication/presentation` holds the launch splash (`SplashScreen`), login UI (`SignInScreen`), signup UI (`CreateAccountScreen`), email confirmation (`ConfirmAccountScreen`), phone verification (`VerifyPhoneNumberScreen`), password recovery (`ForgotPasswordScreen`, `ResetCodeScreen`, `NewPasswordScreen`, `PasswordChangedScreen`), and the signed-in screen (`SignedInScreen`). There is no domain layer for auth: the screens call the repository, and the server owns the rules. Continue with Google uses `google_sign_in` so the phone can open the Google account sheet and hand the API an ID token. That package is here because the button has to talk to Google. The web client id comes from `--dart-define=GOOGLE_CLIENT_ID=...`, the same way the API address comes from `--dart-define=API_BASE_URL=...`. Neither value is hard-coded in Dart.
+
+Type, spacing, and the picture under the form come from `app/responsive_layout.dart`. Forms scroll. The picture hides while the keyboard is open, so the field you tapped stays focused. Onboarding scrolls on a short screen.
 
 `features/onboarding/presentation` holds onboarding screens (`OnboardingScreenOne`, `OnboardingScreenTwo`, `OnboardingScreenThree`) and shared onboarding widgets (content layout, progress dots, primary and skip buttons). Screen 3 completes onboarding with **Get Started** or **Skip**, then `Navigator.pushAndRemoveUntil` to `SignInScreen`.
 
-Startup uses `MaterialApp` with `home: SplashScreen`. After a short loading animation, `SplashScreen` replaces itself with `OnboardingScreenOne` via `Navigator.pushReplacement`. Onboarding pages advance with `Navigator.push`. No separate routing package. `SignInScreen` remains a placeholder for post-onboarding auth.
+Startup uses `MaterialApp` with `home: SplashScreen`. After the loading animation, a saved session opens `SignedInScreen`. Otherwise `SplashScreen` replaces itself with `OnboardingScreenOne`. Onboarding pages advance with `Navigator.push`. No separate routing package. Sign-in calls the API and opens `SignedInScreen`. Create account with email or phone opens `SignInScreen` and does not start a session. Continue with Google on either screen opens `SignedInScreen`. A new Google email is registered from the sign-in screen as well. On create account, that button stays off until the terms box is ticked. Closing the Google sheet does not show an error.
 
 Repair, refurbishment, recycling, registry, points, device owners, and partners are required product modules. They have no Flutter folders yet because we have not decided if those roles use this app. When that is decided, add a feature folder with the same three layers.
 
@@ -55,9 +57,9 @@ Repair, refurbishment, recycling, registry, points, device owners, and partners 
 
 ## Packages
 
-The app depends on the Flutter SDK. Do not add a package for state, HTTP, a local database, maps, or the camera until the feature needs it, and write down why in the change.
+The app depends on the Flutter SDK, `http` (the auth API), `flutter_secure_storage` (access and refresh tokens), and `google_sign_in` (the Google account sheet). Do not add a package for state, a local database, maps, or the camera until the feature needs it, and write down why in the change.
 
-Still open: HTTP client, on-device database, secure token storage, camera and barcode scanning, maps and location, state management.
+Still open: on-device database, camera and barcode scanning, maps and location, state management.
 
 ## Identity
 

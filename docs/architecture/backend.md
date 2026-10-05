@@ -2,7 +2,7 @@
 
 The backend is the system of record. It checks every official change to users, devices, collections, assessments, pathway work, points, and the registry.
 
-No code yet. Language and framework are [TBD]. Choose them before a scaffold. Favor a small team, a relational database, clear modules, and ordinary hosting. Do not introduce a set of separately deployed services for the pilot. The product definition treats that split as unnecessary for the first release.
+The runtime is Node.js, TypeScript, and Fastify. The store is PostgreSQL. One service. Do not split the pilot into separately deployed services. The auth module is implemented. The other areas below are not.
 
 ```mermaid
 flowchart LR

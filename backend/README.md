@@ -2,16 +2,27 @@
 
 The backend owns the business rules. The phone must not carry a second copy of them.
 
-Not started. Language and framework are not chosen. Do not add a scaffold until they are. An empty framework in the repo would become the decision by accident.
+Runtime: Node.js, TypeScript, and Fastify. Store: PostgreSQL. The auth module is the part connected to the current app. Other modules are not built.
 
-What is already set:
+```text
+backend/
+├── src/
+│   ├── server.ts
+│   ├── app.ts
+│   ├── config.ts
+│   ├── db/
+│   ├── http/
+│   ├── modules/auth/
+│   │   ├── auth.routes.ts
+│   │   ├── auth.controller.ts
+│   │   ├── auth.service.ts
+│   │   └── auth.repository.ts
+│   └── providers/
+└── docker-compose.yml
+```
 
-- Versioned API. The prefix in the product definition is `/api/v1/`.
-- A request goes route, controller, service, repository, database.
-- Rules live in the service layer, not in the controller.
-- The transactional store is relational unless a later review shows a real reason to use something else.
-- Lifecycle writes have to survive a process crash.
+A request goes route, controller, service, repository, database. Rules live in the service. The repository does not decide whether a caller is allowed.
 
-Still open: language, database product, host, and whether auth is a server session or a token.
+Local setup is in [docs/development/setup.md](../docs/development/setup.md). What the account work covers is in [docs/development/accounts.md](../docs/development/accounts.md). The auth contract is in [docs/architecture/api.md](../docs/architecture/api.md).
 
-See [docs/architecture/backend.md](../docs/architecture/backend.md) and [docs/architecture/api.md](../docs/architecture/api.md).
+Still open: where this runs in production, and every module past auth. Codes and welcome notes go through Brevo. The database URL stays in the environment.

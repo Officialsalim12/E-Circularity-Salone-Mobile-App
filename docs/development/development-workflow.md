@@ -19,7 +19,9 @@ Follow [../product/roadmap.md](../product/roadmap.md). Do not start points redem
 
 Close C-01 through C-04 before coding the transitions, roles, or assessment records they affect. Close C-06 before adding a collector or parts-recovery account.
 
-A pull request says what changed and why, which requirement or acceptance check it covers, how you checked it, and what is still unfinished. Add a screenshot when the screen changes. If stored data changes, say how existing rows are handled.
+Write the commit the way you'd tell a teammate what you fixed. "Keep the email field focused when the keyboard opens" is better than "Update auth form viewport".
+
+A pull request should say what changed and why, which requirement it covers, how you tried it, and what's still unfinished. Add a screenshot if the screen changed. If stored rows change, say what happens to the ones already there.
 
 Reviewers check that the change matches a written requirement, does not invent a [TBD] rule, handles errors and authorization on the new path, updates the docs when behavior or structure changed, and contains no secrets or personal data.
 

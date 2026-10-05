@@ -2,7 +2,7 @@
 
 Working baseline from Product Definition 1.0. The original text is [prd.md](prd.md).
 
-None of this is in the app yet.
+None of the device, collection, or lifecycle behavior below is in the app yet. Sign-in and device-owner registration are.
 
 ## Objectives
 

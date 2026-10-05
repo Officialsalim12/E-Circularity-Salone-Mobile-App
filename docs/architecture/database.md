@@ -1,6 +1,6 @@
 # Database
 
-Use a relational database for the transactional core. The product is [TBD]. No tables exist. This note is the conceptual model from the definition, not a schema.
+Use a relational database for the transactional core. The product is PostgreSQL. Auth tables exist: `users`, `refresh_tokens`, `verification_challenges`, `verification_proofs`. A password account stores `password_hash`. A Google-only account leaves that null and stores `google_sub` instead. One of those two has to be set. No device, collection, or lifecycle tables exist. This note is still the conceptual model from the definition for everything except auth.
 
 A production diagram with real cardinalities is still design work. How many device owners a user belongs to, and how many users a device owner has, is not specified, so it is not drawn as a number.
 

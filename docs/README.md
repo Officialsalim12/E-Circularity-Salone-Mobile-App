@@ -29,7 +29,7 @@ A few names differ from the definition's sketch:
 | operations/agents | No separate file. Agent work is in the role, flow, and collection notes. |
 | one deployment file | [deployment/environments.md](deployment/environments.md), [deployment/ci-cd.md](deployment/ci-cd.md), [deployment/release-process.md](deployment/release-process.md) |
 
-Read [product/vision.md](product/vision.md), then roles, flows, and requirements. Architecture after that. Open items are in [product/open-decisions.md](product/open-decisions.md).
+Read [product/vision.md](product/vision.md), then roles, flows, and requirements. Architecture after that. Open items are in [product/open-decisions.md](product/open-decisions.md). What is actually built for accounts is in [development/accounts.md](development/accounts.md).
 
 | | |
 | --- | --- |

@@ -81,4 +81,4 @@ Reports: collection, lifecycle, circularity, impact, agent activity, partner act
 
 The admin client technology is [TBD]. Do not assume those screens live inside the Android field app.
 
-The Android project does not implement any of the modules above. It only reserves folders for the first client features. See [../architecture/mobile-app.md](../architecture/mobile-app.md).
+The Android app can sign in, create a device-owner account, confirm an email or phone, reset a password, and continue with Google. The other modules above are not in the app yet. The write-up of that account work is in [../development/accounts.md](../development/accounts.md).

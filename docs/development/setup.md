@@ -61,10 +61,38 @@ flutter run -d <device-id>
 
 In VS Code / Cursor, use **Run and Debug** → *Circular Salone (Android)*, *Circular Salone (iOS Simulator)*, or *Circular Salone (iPhone — This PC's iPhone)*.
 
-The app shows splash → onboarding → sign-in UI. Auth is not wired to a server yet.
+The app shows splash → onboarding → sign-in, unless a refresh token is already stored. Auth calls the local API. Continue with Google also needs `GOOGLE_CLIENT_ID` on the API and the same web client id passed to Flutter.
 
-Copy `.env.example` to `.env` only when you have a local API URL. The API is not deployed. Do not commit `.env`.
+## API
+
+Node.js 20 or newer. The database is the `DATABASE_URL` in `.env`. This project uses a Neon Postgres connection string there. Do not commit that file.
+
+```bash
+cp .env.example .env
+```
+
+Set `DATABASE_URL`, `BREVO_API_KEY`, and `BREVO_SENDER_EMAIL`. The email sender must already be verified in Brevo. `BREVO_SMS_SENDER` is the approved SMS sender id, 3 to 11 letters or digits. Email works without it. A text is refused until it is set. `GOOGLE_CLIENT_ID` is the web client id. Leave it empty and email and phone auth still work. Google sign-in answers that it isn't set up until the id is there. Then:
+
+```bash
+cd backend
+npm install
+npm run dev
+```
+
+`npm run dev` runs the auth migration and listens on port 3000. Signup and password reset send a 6-digit code by email or text, then a short welcome on the same channel once the account exists. The API never returns that code or writes it to the log.
+
+`backend/docker-compose.yml` is only for a local Postgres, if you point `DATABASE_URL` at it instead of Neon. Local Postgres does not use `sslmode=require`.
+
+The phone does not read `.env`. Pass the API address when you run the app. The Android emulator reaches the host machine at `10.0.2.2`. The iOS simulator and Chrome use `127.0.0.1`. A physical phone needs this computer's LAN address instead of either of those. A debug Android build allows the local `http` address. A release build does not.
+
+```bash
+cd frontend/mobile
+flutter pub get
+flutter run -d emulator-5554 --dart-define=API_BASE_URL=http://10.0.2.2:3000 --dart-define=GOOGLE_CLIENT_ID=<web client id>
+```
+
+Copy `.env.example` to `.env` for the API process. Do not commit `.env`.
 
 Environment names are in [../deployment/environments.md](../deployment/environments.md). The package name is `circular_salone`. The display name is Circular Salone. Platform detail is in [../architecture/mobile-app.md](../architecture/mobile-app.md).
 
-Not in the repo yet: a backend, a database, feature screens, third-party keys. Add them when the related item in [../product/open-decisions.md](../product/open-decisions.md) is closed.
+What the account work covers is in [accounts.md](accounts.md). Device, collection, and lifecycle modules are not in the repo yet. Add them when the related item in [../product/open-decisions.md](../product/open-decisions.md) is closed.
